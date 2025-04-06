@@ -1,19 +1,25 @@
 package com.example.myapplication
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.google.firebase.auth.FirebaseAuth
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun SignupScreen(navController: NavController) {
+    val context = LocalContext.current
+    val auth = FirebaseAuth.getInstance()
+
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -33,7 +39,6 @@ fun SignupScreen(navController: NavController) {
         Text(
             text = "SIGN UP",
             fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
             color = Color(0xFFA23E48),
             modifier = Modifier.padding(top = 40.dp)
         )
@@ -63,6 +68,7 @@ fun SignupScreen(navController: NavController) {
             value = email,
             onValueChange = { email = it },
             label = { Text("Email") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -73,8 +79,8 @@ fun SignupScreen(navController: NavController) {
             value = password,
             onValueChange = { password = it },
             label = { Text("Password") },
-            modifier = Modifier.fillMaxWidth(),
-            visualTransformation = PasswordVisualTransformation()
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -84,8 +90,8 @@ fun SignupScreen(navController: NavController) {
             value = confirmPassword,
             onValueChange = { confirmPassword = it },
             label = { Text("Confirm Password") },
-            modifier = Modifier.fillMaxWidth(),
-            visualTransformation = PasswordVisualTransformation()
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -105,15 +111,27 @@ fun SignupScreen(navController: NavController) {
             onClick = {
                 if (firstName.isNotEmpty() && lastName.isNotEmpty() && email.isNotEmpty() &&
                     password.isNotEmpty() && confirmPassword == password && privacyAccepted) {
-                    // Navigate back to Sign-In screen
-                    navController.navigate("SignInScreen")
+
+                    // Firebase Signup
+                    auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Toast.makeText(context, "Signup Successful!", Toast.LENGTH_SHORT).show()
+                                navController.navigate("basicDetailsScreen")
+                            } else {
+                                Toast.makeText(context, "Signup Failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                            }
+                        }
+                } else {
+                    Toast.makeText(context, "Please fill all fields correctly!", Toast.LENGTH_SHORT).show()
                 }
             },
             colors = ButtonDefaults.buttonColors(Color(0xFFC87F4F)),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "Sign Up",fontSize = 30.sp, color = Color.White, fontWeight = FontWeight.Bold, fontFamily = FontFamily.SansSerif)
+            Text(text = "Sign Up", fontSize = 30.sp, color = Color.White)
         }
     }
 }
+
 

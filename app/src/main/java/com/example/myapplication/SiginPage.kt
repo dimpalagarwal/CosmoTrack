@@ -12,12 +12,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.google.firebase.auth.FirebaseAuth
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
+
 
 @Composable
 fun SignInScreen(navController: NavController) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var rememberMe by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+    val auth = FirebaseAuth.getInstance()
 
     Column(
         modifier = Modifier
@@ -84,7 +90,21 @@ fun SignInScreen(navController: NavController) {
 
         // Login Button
         Button(
-            onClick = { /* Handle Login */ },
+            onClick = {
+                if (username.isNotEmpty() && password.isNotEmpty()) {
+                    auth.signInWithEmailAndPassword(username, password)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Toast.makeText(context, "Login Successful", Toast.LENGTH_SHORT).show()
+                                navController.navigate("basicDetailsScreen")
+                            } else {
+                                Toast.makeText(context, "Login Failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                            }
+                        }
+                } else {
+                    Toast.makeText(context, "Please enter email and password", Toast.LENGTH_SHORT).show()
+                }
+            },
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFC87F4F)),
             shape = RoundedCornerShape(20.dp),
             modifier = Modifier

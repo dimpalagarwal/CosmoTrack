@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "249003074286",
-    "project_id": "cosmotrack-98501",
-    "storage_bucket": "cosmotrack-98501.firebasestorage.app"
+    "project_number": "348070488274",
+    "project_id": "cosmotrack-e7a48",
+    "storage_bucket": "cosmotrack-e7a48.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:249003074286:android:c8cfb5b373bd1ed32e09ff",
+        "mobilesdk_app_id": "1:348070488274:android:0fd7e4472f3d4c5deaa50b",
         "android_client_info": {
           "package_name": "com.example.myapplication"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "249003074286-kqcnu8betiup25e03c2a4pvb7vf9camt.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAT0tkK5IkG_MuKMyrsOmAQz7PY0JP_mIE"
+          "current_key": "AIzaSyCagUi45zuM85ewMFSa3iJoXzo6DBaoLQg"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "249003074286-kqcnu8betiup25e03c2a4pvb7vf9camt.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
