@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -14,8 +15,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import android.widget.Toast
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import coil.compose.rememberAsyncImagePainter
 
 @Composable
 fun DashboardScreen(
@@ -24,6 +33,7 @@ fun DashboardScreen(
     navController: NavController
 ) {
     var showOptions by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     Scaffold(
         floatingActionButton = {
@@ -35,7 +45,6 @@ fun DashboardScreen(
                     Icon(Icons.Default.Add, contentDescription = "Add")
                 }
 
-                // Popup options when FAB is clicked
                 DropdownMenu(
                     expanded = showOptions,
                     onDismissRequest = { showOptions = false }
@@ -44,29 +53,29 @@ fun DashboardScreen(
                         text = { Text("Scanner") },
                         onClick = {
                             showOptions = false
-                            // TODO: Navigate to Scanner Screen
+                            // Start real scanner
+                            navController.navigate("scannerScreen")
                         }
                     )
                     DropdownMenuItem(
                         text = { Text("Manually Enter Product Details") },
                         onClick = {
                             showOptions = false
-                            // TODO: Navigate to Manual Entry Screen
+                            // Navigate to Manual Entry
+                            navController.navigate("manualEntryScreen")
                         }
                     )
                 }
             }
         }
     ) { innerPadding ->
-
         Column(
             modifier = Modifier
                 .padding(innerPadding)
                 .padding(16.dp)
                 .fillMaxSize()
         ) {
-
-            // Profile Info
+            // Profile Row
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
@@ -102,12 +111,27 @@ fun DashboardScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Calendar section
+            // Google Calendar Section
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { /* TODO: Link Google Calendar */ },
-                colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF3E0))
+                    .clickable {
+                        val intent = Intent(Intent.ACTION_EDIT).apply {
+                            type = "vnd.android.cursor.item/event"
+                            putExtra("title", "Beauty Routine")
+                            putExtra("description", "Add your skincare routine, product reminders, or appointments")
+                            putExtra("eventLocation", "Home") // Optional
+                        }
+
+                        // Safely start activity
+                        if (intent.resolveActivity(context.packageManager) != null) {
+                            context.startActivity(intent)
+                        } else {
+                            Toast.makeText(context, "No Calendar app found", Toast.LENGTH_SHORT).show()
+                        }
+                    },
+
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF3E0))
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text("📅 Add your Google Calendar", fontWeight = FontWeight.Medium)
@@ -117,14 +141,14 @@ fun DashboardScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Optional Dashboard Content
-            Text("Today's Tips", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+            // Extra Dashboard Features (Example)
+            Text("Tips for You", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F5E9))
             ) {
                 Text(
-                    "Stay hydrated and never skip sunscreen!",
+                    "Drink 8 glasses of water and don’t forget sunscreen!",
                     modifier = Modifier.padding(16.dp)
                 )
             }
@@ -132,7 +156,6 @@ fun DashboardScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text("Recently Added Products", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
-            // Placeholder product cards
             repeat(2) {
                 Card(
                     modifier = Modifier
@@ -149,5 +172,6 @@ fun DashboardScreen(
         }
     }
 }
+
 
 

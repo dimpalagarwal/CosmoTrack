@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(platform(libs.firebase.bom.v33120))
     implementation(libs.google.firebase.analytics)
+    implementation (libs.zxing.android.embedded)
 
 
 }

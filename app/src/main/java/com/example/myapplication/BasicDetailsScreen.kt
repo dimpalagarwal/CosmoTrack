@@ -138,7 +138,13 @@ fun BasicDetailsScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(
-            onClick = { navController.navigate("dashboard") }, // Navigate to Dashboard
+            onClick = {
+                navController.currentBackStackEntry?.savedStateHandle?.apply {
+                    set("name", name)
+                    set("imageUri", selectedImageUri)
+                }
+                navController.navigate("dashboardScreen")
+            }, // Navigate to Dashboard
             colors = ButtonDefaults.buttonColors(Color(0xFFC87F4F)),
             modifier = Modifier.fillMaxWidth()
         ) {

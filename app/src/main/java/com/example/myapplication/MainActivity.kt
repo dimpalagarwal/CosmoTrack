@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -44,7 +45,19 @@ fun AppNavigation() {
         composable("welcome") { WelcomeScreen(navController) }
         composable("signin") { SignInScreen(navController) }
         composable("signup") { SignupScreen(navController) }
-        composable("basicDetailsScreen") { BasicDetailsScreen(navController) }
+        composable("basicDetailsScreen") {
+            BasicDetailsScreen(navController)
+        }
+        composable("dashboardScreen") { backStackEntry ->
+            val name = backStackEntry.savedStateHandle.get<String>("name") ?: ""
+            val imageUri = backStackEntry.savedStateHandle.get<Uri>("imageUri")
+            DashboardScreen(name = name, imageUri = imageUri, navController = navController)
+        }
+        composable("scannerScreen") {
+            ScannerScreen { scannedData ->
+                navController.navigate("productDetailsScreen/${Uri.encode(scannedData)}")
+            }
+        }
     }
 }
 
