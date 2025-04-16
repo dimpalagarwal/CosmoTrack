@@ -2,35 +2,35 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.*
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import com.google.firebase.auth.FirebaseAuth
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.google.android.gms.analytics.ecommerce.Product
 
 @Composable
 fun DashboardScreen(
     name: String,
     imageUri: Uri?,
-    navController: NavController
+    navController: NavController,
+    scannedProducts: SnapshotStateList<Product>
 ) {
     var showOptions by remember { mutableStateOf(false) }
     val context = LocalContext.current
@@ -53,7 +53,6 @@ fun DashboardScreen(
                         text = { Text("Scanner") },
                         onClick = {
                             showOptions = false
-                            // Start real scanner
                             navController.navigate("scannerScreen")
                         }
                     )
@@ -61,7 +60,6 @@ fun DashboardScreen(
                         text = { Text("Manually Enter Product Details") },
                         onClick = {
                             showOptions = false
-                            // Navigate to Manual Entry
                             navController.navigate("manualEntryScreen")
                         }
                     )
@@ -75,11 +73,11 @@ fun DashboardScreen(
                 .padding(16.dp)
                 .fillMaxSize()
         ) {
-            // Profile Row
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Profile Info
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 if (imageUri != null) {
                     Image(
                         painter = rememberAsyncImagePainter(imageUri),
@@ -91,25 +89,30 @@ fun DashboardScreen(
                 } else {
                     Box(
                         modifier = Modifier
-                            .size(80.dp)
+                            .size(100.dp)
                             .clip(CircleShape)
                             .background(Color.LightGray),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text("No Photo", fontSize = 10.sp)
+                        Text("No Photo", fontSize = 15.sp)
                     }
                 }
 
-                Spacer(modifier = Modifier.width(16.dp))
-
-                Text(
-                    text = name,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                Spacer(modifier = Modifier.weight(1f))
+                Column(
+                    horizontalAlignment = Alignment.End // Align items inside the column to the end (right)
+                ){
+                    Text(text = name, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                    Button(onClick = { /* Chat with AI */ }, modifier = Modifier.padding(top = 4.dp)) {
+                        Text("Chat with AI")
+                    }
+                    Button(onClick = { /* Your Products */ }, modifier = Modifier.padding(top = 4.dp)) {
+                        Text("Your products...")
+                    }
+                }
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(28.dp))
 
             // Google Calendar Section
             Card(
@@ -131,7 +134,7 @@ fun DashboardScreen(
                         }
                     },
 
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF3E0))
+                colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF3E0))
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text("📅 Add your Google Calendar", fontWeight = FontWeight.Medium)
@@ -153,25 +156,35 @@ fun DashboardScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-            Text("Recently Added Products", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
-            repeat(2) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 4.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF3E5F5))
-                ) {
-                    Text(
-                        text = "Product ${it + 1}",
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
+            Button(
+                onClick = { /* Navigate to Expiring Products */ },
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("\u26A0 Expiring Products", color = Color.White)
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Button(
+                onClick = { /* Navigate to Alternative Uses */ },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD2A66B)),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Alternative uses for Expired Products")
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Button(
+                onClick = { /* Navigate to Explore New Looks */ },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD2A66B)),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Explore new looks")
             }
         }
     }
 }
-
-
-

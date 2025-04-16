@@ -16,7 +16,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -48,109 +50,138 @@ fun BasicDetailsScreen(navController: NavController) {
     ) { uri: Uri? ->
         selectedImageUri = uri
     }
-
-
-
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(50.dp))
-
-        Text(
-            text = "Enter Your Beauty Profile",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFFA23E48)
+        // Background image
+        Image(
+            painter = painterResource(id = R.drawable.background_image),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                .alpha(0.5f) // reduce opacity
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
 
-        Box(
-            modifier = Modifier
-                .size(120.dp)
-                .border(2.dp, Color.Gray, CircleShape)
-                .clickable {
-                    photoPickerLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-                },
-            contentAlignment = Alignment.Center
-        ) {
-            if (selectedImageUri != null) {
-                Image(
-                    painter = rememberAsyncImagePainter(selectedImageUri),
-                    contentDescription = "Profile Image",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.height(50.dp))
+
+                Text(
+                    text = "Enter Your Beauty Profile",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFFA23E48)
                 )
-            } else {
-                Text(text = "Tap to Upload", color = Color.Gray)
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Box(
+                    modifier = Modifier
+                        .size(120.dp)
+                        .border(2.dp, Color.Gray, CircleShape)
+                        .clickable {
+                            photoPickerLauncher.launch(
+                                PickVisualMediaRequest(
+                                    ActivityResultContracts.PickVisualMedia.ImageOnly
+                                )
+                            )
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (selectedImageUri != null) {
+                        Image(
+                            painter = rememberAsyncImagePainter(selectedImageUri),
+                            contentDescription = "Profile Image",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    } else {
+                        Text(text = "Tap to Upload", color = Color.DarkGray,fontWeight = FontWeight.Bold)
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Full Name") },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color.Black,
+                        unfocusedBorderColor = Color.Black,
+                        cursorColor = Color.Black
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                OutlinedTextField(
+                    value = age,
+                    onValueChange = { age = it },
+                    label = { Text("Age") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                OutlinedTextField(
+                    value = skinType,
+                    onValueChange = { skinType = it },
+                    label = { Text("Skin Type (e.g., Dry, Oily, Combination)") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                OutlinedTextField(
+                    value = hairType,
+                    onValueChange = { hairType = it },
+                    label = { Text("Hair Type (e.g., Curly, Straight, Wavy)") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                OutlinedTextField(
+                    value = preferredBrands,
+                    onValueChange = { preferredBrands = it },
+                    label = { Text("Preferred Beauty Brands") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Button(
+                    onClick = {
+                        navController.currentBackStackEntry?.savedStateHandle?.apply {
+                            set("name", name)
+                            set("imageUri", selectedImageUri)
+                        }
+                        navController.navigate("dashboardScreen")
+                    }, // Navigate to Dashboard
+                    colors = ButtonDefaults.buttonColors(Color(0xFFC87F4F)),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = "Next",
+                        fontSize = 30.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = FontFamily.SansSerif
+                    )
+                }
             }
         }
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        OutlinedTextField(
-            value = name,
-            onValueChange = { name = it },
-            label = { Text("Full Name") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        OutlinedTextField(
-            value = age,
-            onValueChange = { age = it },
-            label = { Text("Age") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        OutlinedTextField(
-            value = skinType,
-            onValueChange = { skinType = it },
-            label = { Text("Skin Type (e.g., Dry, Oily, Combination)") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        OutlinedTextField(
-            value = hairType,
-            onValueChange = { hairType = it },
-            label = { Text("Hair Type (e.g., Curly, Straight, Wavy)") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        OutlinedTextField(
-            value = preferredBrands,
-            onValueChange = { preferredBrands = it },
-            label = { Text("Preferred Beauty Brands") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Button(
-            onClick = {
-                navController.currentBackStackEntry?.savedStateHandle?.apply {
-                    set("name", name)
-                    set("imageUri", selectedImageUri)
-                }
-                navController.navigate("dashboardScreen")
-            }, // Navigate to Dashboard
-            colors = ButtonDefaults.buttonColors(Color(0xFFC87F4F)),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text = "Next",fontSize = 30.sp, color = Color.White, fontWeight = FontWeight.Bold, fontFamily = FontFamily.SansSerif)
-        }
     }
-}
+
 
 

@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -24,6 +26,7 @@ import com.google.firebase.FirebaseApp
 import androidx.navigation.compose.*
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.google.android.gms.analytics.ecommerce.Product
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +43,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-
+    val scannedProducts = remember { mutableStateListOf<Product>() }
     NavHost(navController, startDestination = "welcome") {
         composable("welcome") { WelcomeScreen(navController) }
         composable("signin") { SignInScreen(navController) }
@@ -51,7 +54,12 @@ fun AppNavigation() {
         composable("dashboardScreen") { backStackEntry ->
             val name = backStackEntry.savedStateHandle.get<String>("name") ?: ""
             val imageUri = backStackEntry.savedStateHandle.get<Uri>("imageUri")
-            DashboardScreen(name = name, imageUri = imageUri, navController = navController)
+            DashboardScreen(
+                name = name,
+                imageUri = imageUri,
+                navController = navController,
+                scannedProducts = scannedProducts
+            )
         }
         composable("scannerScreen") {
             ScannerScreen { scannedData ->
