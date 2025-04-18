@@ -64,6 +64,20 @@ fun BasicDetailsScreen(navController: NavController) {
                 .alpha(0.5f) // reduce opacity
         )
 
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            TextButton(onClick = { /* TODO: Handle Edit */ }) {
+                Text("Edit", color = Color(0xFFB23B3B), fontWeight = FontWeight.Bold)
+            }
+            TextButton(onClick = { /* TODO: Handle Skip */ }) {
+                Text("Skip", color = Color(0xFFB23B3B), fontWeight = FontWeight.Bold)
+            }
+        }
+
 
             Column(
                 modifier = Modifier
@@ -112,7 +126,7 @@ fun BasicDetailsScreen(navController: NavController) {
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Full Name") },
+                    label = { Text("Full Name", color = Color.Black) },
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = Color.Black,
@@ -126,7 +140,7 @@ fun BasicDetailsScreen(navController: NavController) {
                 OutlinedTextField(
                     value = age,
                     onValueChange = { age = it },
-                    label = { Text("Age") },
+                    label = { Text("Age", color = Color.Black) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -136,7 +150,7 @@ fun BasicDetailsScreen(navController: NavController) {
                 OutlinedTextField(
                     value = skinType,
                     onValueChange = { skinType = it },
-                    label = { Text("Skin Type (e.g., Dry, Oily, Combination)") },
+                    label = { Text("Skin Type (e.g., Dry, Oily, Combination)", color = Color.Black) },
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -145,7 +159,7 @@ fun BasicDetailsScreen(navController: NavController) {
                 OutlinedTextField(
                     value = hairType,
                     onValueChange = { hairType = it },
-                    label = { Text("Hair Type (e.g., Curly, Straight, Wavy)") },
+                    label = { Text("Hair Type (e.g., Curly, Straight, Wavy)", color = Color.Black) },
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -154,7 +168,7 @@ fun BasicDetailsScreen(navController: NavController) {
                 OutlinedTextField(
                     value = preferredBrands,
                     onValueChange = { preferredBrands = it },
-                    label = { Text("Preferred Beauty Brands") },
+                    label = { Text("Preferred Beauty Brands", color = Color.Black) },
                     modifier = Modifier.fillMaxWidth()
                 )
 

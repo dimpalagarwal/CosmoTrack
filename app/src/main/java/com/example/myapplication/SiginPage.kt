@@ -14,6 +14,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import android.widget.Toast
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 
 
@@ -24,6 +26,20 @@ fun SignInScreen(navController: NavController) {
     var rememberMe by remember { mutableStateOf(false) }
     val context = LocalContext.current
     val auth = FirebaseAuth.getInstance()
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        // Background image
+        Image(
+            painter = painterResource(id = R.drawable.background_image),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                .alpha(0.5f) // reduce opacity
+        )
 
     Column(
         modifier = Modifier
@@ -48,7 +64,7 @@ fun SignInScreen(navController: NavController) {
         OutlinedTextField(
             value = username,
             onValueChange = { username = it },
-            label = { Text("Username") },
+            label = { Text("Username", color = Color.Black) },
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color(0xFFE0E0E0), shape = RoundedCornerShape(10.dp))
@@ -60,7 +76,9 @@ fun SignInScreen(navController: NavController) {
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Password") },
+            label = {
+                Text("Password", color = Color.Black) // explicitly set label text color
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color(0xFFE0E0E0), shape = RoundedCornerShape(10.dp))
@@ -133,7 +151,8 @@ fun SignInScreen(navController: NavController) {
         }
 
         Spacer(modifier = Modifier.weight(1f))
-
+         }
 
     }
+
 }

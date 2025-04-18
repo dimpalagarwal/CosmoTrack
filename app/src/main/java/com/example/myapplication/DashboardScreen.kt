@@ -15,9 +15,12 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -67,123 +70,149 @@ fun DashboardScreen(
             }
         }
     ) { innerPadding ->
-        Column(
+
+        Box(
             modifier = Modifier
-                .padding(innerPadding)
-                .padding(16.dp)
                 .fillMaxSize()
         ) {
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Profile Info
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                if (imageUri != null) {
-                    Image(
-                        painter = rememberAsyncImagePainter(imageUri),
-                        contentDescription = "Profile Photo",
-                        modifier = Modifier
-                            .size(80.dp)
-                            .clip(CircleShape)
-                    )
-                } else {
-                    Box(
-                        modifier = Modifier
-                            .size(100.dp)
-                            .clip(CircleShape)
-                            .background(Color.LightGray),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text("No Photo", fontSize = 15.sp)
-                    }
-                }
-
-                Spacer(modifier = Modifier.weight(1f))
-                Column(
-                    horizontalAlignment = Alignment.End // Align items inside the column to the end (right)
-                ){
-                    Text(text = name, fontSize = 22.sp, fontWeight = FontWeight.Bold)
-                    Button(onClick = { /* Chat with AI */ }, modifier = Modifier.padding(top = 4.dp)) {
-                        Text("Chat with AI")
-                    }
-                    Button(onClick = { /* Your Products */ }, modifier = Modifier.padding(top = 4.dp)) {
-                        Text("Your products...")
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(28.dp))
-
-            // Google Calendar Section
-            Card(
+            // Background image
+            Image(
+                painter = painterResource(id = R.drawable.background_image),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        val intent = Intent(Intent.ACTION_EDIT).apply {
-                            type = "vnd.android.cursor.item/event"
-                            putExtra("title", "Beauty Routine")
-                            putExtra("description", "Add your skincare routine, product reminders, or appointments")
-                            putExtra("eventLocation", "Home") // Optional
-                        }
+                    .fillMaxSize()
+                    .alpha(0.5f) // reduce opacity
+            )
 
-                        // Safely start activity
-                        if (intent.resolveActivity(context.packageManager) != null) {
-                            context.startActivity(intent)
-                        } else {
-                            Toast.makeText(context, "No Calendar app found", Toast.LENGTH_SHORT).show()
-                        }
-                    },
-
-                colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF3E0))
+            Column(
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .padding(16.dp)
+                    .fillMaxSize()
             ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text("📅 Add your Google Calendar", fontWeight = FontWeight.Medium)
-                    Text("Sync your schedule for better planning.")
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Profile Info
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    if (imageUri != null) {
+                        Image(
+                            painter = rememberAsyncImagePainter(imageUri),
+                            contentDescription = "Profile Photo",
+                            modifier = Modifier
+                                .size(80.dp)
+                                .clip(CircleShape)
+                        )
+                    } else {
+                        Box(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .clip(CircleShape)
+                                .background(Color.LightGray),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text("No Photo", fontSize = 15.sp)
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.weight(1f))
+                    Column(
+                        horizontalAlignment = Alignment.End // Align items inside the column to the end (right)
+                    ) {
+                        Text(text = name, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                        Button(
+                            onClick = { /* Chat with AI */ },
+                            modifier = Modifier.padding(top = 4.dp)
+                        ) {
+                            Text("Chat with AI")
+                        }
+                        Button(
+                            onClick = { /* Your Products */ },
+                            modifier = Modifier.padding(top = 4.dp)
+                        ) {
+                            Text("Your products...")
+                        }
+                    }
                 }
-            }
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(28.dp))
 
-            // Extra Dashboard Features (Example)
-            Text("Tips for You", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F5E9))
-            ) {
-                Text(
-                    "Drink 8 glasses of water and don’t forget sunscreen!",
-                    modifier = Modifier.padding(16.dp)
-                )
-            }
+                // Google Calendar Section
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            val intent = Intent(Intent.ACTION_EDIT).apply {
+                                type = "vnd.android.cursor.item/event"
+                                putExtra("title", "Beauty Routine")
+                                putExtra(
+                                    "description",
+                                    "Add your skincare routine, product reminders, or appointments"
+                                )
+                                putExtra("eventLocation", "Home") // Optional
+                            }
 
-            Spacer(modifier = Modifier.height(12.dp))
+                            // Safely start activity
+                            if (intent.resolveActivity(context.packageManager) != null) {
+                                context.startActivity(intent)
+                            } else {
+                                Toast.makeText(context, "No Calendar app found", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        },
 
-            Button(
-                onClick = { /* Navigate to Expiring Products */ },
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("\u26A0 Expiring Products", color = Color.White)
-            }
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF3E0))
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text("📅 Add your Google Calendar", fontWeight = FontWeight.Medium)
+                        Text("Sync your schedule for better planning.")
+                    }
+                }
 
-            Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            Button(
-                onClick = { /* Navigate to Alternative Uses */ },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD2A66B)),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Alternative uses for Expired Products")
-            }
+                // Extra Dashboard Features (Example)
+                Text("Tips for You", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F5E9))
+                ) {
+                    Text(
+                        "Drink 8 glasses of water and don’t forget sunscreen!",
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
 
-            Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(12.dp))
 
-            Button(
-                onClick = { /* Navigate to Explore New Looks */ },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD2A66B)),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Explore new looks")
+                Button(
+                    onClick = { /* Navigate to Expiring Products */ },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("\u26A0 Expiring Products", color = Color.White)
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Button(
+                    onClick = { /* Navigate to Alternative Uses */ },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD2A66B)),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Alternative uses for Expired Products")
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Button(
+                    onClick = { /* Navigate to Explore New Looks */ },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD2A66B)),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Explore new looks")
+                }
             }
         }
     }

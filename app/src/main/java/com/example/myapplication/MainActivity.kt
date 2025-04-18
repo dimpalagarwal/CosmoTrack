@@ -61,9 +61,7 @@ fun AppNavigation() {
             )
         }
         composable("scannerScreen") {
-            ScannerScreen { scannedData ->
-                navController.navigate("productDetailsScreen/${Uri.encode(scannedData.toString())}")
-            }
+            ScannerScreen(navController = navController)
         }
     }
 }

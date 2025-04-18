@@ -14,17 +14,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 @Composable
-fun ScannerScreen(navController: NavController) {
+fun ScannerScreen(navController: NavController)
+ {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
