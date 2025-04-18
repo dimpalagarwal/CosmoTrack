@@ -21,7 +21,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.google.firebase.FirebaseApp
 import androidx.navigation.compose.*
 import androidx.navigation.compose.rememberNavController
@@ -63,7 +62,7 @@ fun AppNavigation() {
         }
         composable("scannerScreen") {
             ScannerScreen { scannedData ->
-                navController.navigate("productDetailsScreen/${Uri.encode(scannedData)}")
+                navController.navigate("productDetailsScreen/${Uri.encode(scannedData.toString())}")
             }
         }
     }
