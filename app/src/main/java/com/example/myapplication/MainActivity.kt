@@ -90,7 +90,7 @@ fun WelcomeScreen(navController: NavController) {
             )
             Spacer(modifier = Modifier.height(25.dp))
             Text(
-                text = "appname",
+                text = "VanitySafe",
                 fontSize = 28.sp,
                 color = Color(0xFFC47F6E)
             )
