@@ -24,17 +24,24 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.myapplication.viewmodel.UserProfileViewModel
 import com.google.android.gms.analytics.ecommerce.Product
 
 @Composable
 fun DashboardScreen(
     name: String,
-    imageUri: Uri?,
     navController: NavController,
-    scannedProducts: SnapshotStateList<Product>
+    scannedProducts: SnapshotStateList<Product>,
+    userProfileViewModel: UserProfileViewModel
+
 ) {
+
+    val viewModel: UserProfileViewModel = viewModel()
+    val imageUri: Uri? = viewModel.profileImageUri.value
+    
     var showOptions by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
@@ -120,7 +127,7 @@ fun DashboardScreen(
                     Column(
                         horizontalAlignment = Alignment.End // Align items inside the column to the end (right)
                     ) {
-                        Text(text = name, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                        Text(text = "Hello $name", fontSize = 22.sp, fontWeight = FontWeight.Bold)
                         Button(
                             onClick = { /* Chat with AI */ },
                             modifier = Modifier.padding(top = 4.dp)

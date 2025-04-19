@@ -1,9 +1,6 @@
 package com.example.myapplication
 
-import android.app.Activity
-import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,11 +22,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.myapplication.viewmodel.UserProfileViewModel
 
 @Composable
-fun BasicDetailsScreen(navController: NavController) {
+fun BasicDetailsScreen(navController: NavController, userProfileViewModel: UserProfileViewModel) {
     var name by remember { mutableStateOf("") }
     var age by remember { mutableStateOf("") }
     var skinType by remember { mutableStateOf("") }
@@ -37,18 +36,15 @@ fun BasicDetailsScreen(navController: NavController) {
     var preferredBrands by remember { mutableStateOf("") }
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
 
-    val imagePickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val uri = result.data?.data
-            selectedImageUri = uri
-        }
-    }
+    val viewModel: UserProfileViewModel = viewModel()
+
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
         selectedImageUri = uri
+        uri?.let {
+            viewModel.setProfileImage(it) // ✅ Updates ViewModel
+        }
     }
     Box(
         modifier = Modifier
