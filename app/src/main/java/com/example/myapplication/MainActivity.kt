@@ -59,6 +59,16 @@ fun AppNavigation() {
         composable("scannerScreen") {
             ScannerScreen(navController = navController)
         }
+        composable(route = "productDetails") {
+            ProductDetailsScreen(
+                product = ProductDetails(
+                    name = "Test Product",
+                    expiryDays = 30,
+                    ingredients = "Water, Alcohol, Aloe Vera",
+                    barcode = "000000000"
+                )
+            )
+        }
     }
 }
 
