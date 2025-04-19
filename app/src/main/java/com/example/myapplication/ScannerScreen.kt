@@ -11,20 +11,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.myapplication.viewmodel.ProductViewModel
 
 @Composable
-fun ScannerScreen(navController: NavController) {
-
-    // Gallery launcher — just picks image and navigates
+fun ScannerScreen(
+    navController: NavController,
+    productViewModel: ProductViewModel
+) {
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         uri?.let {
-            // Directly navigate after picking image
+            productViewModel.selectedProduct = ProductDetails(
+                name = "Test Product",
+                expiryDays = 30,
+                ingredients = "Water, Alcohol, Aloe Vera",
+                barcode = "000000000"
+            )
             navController.navigate("productDetails")
         }
     }
-
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
