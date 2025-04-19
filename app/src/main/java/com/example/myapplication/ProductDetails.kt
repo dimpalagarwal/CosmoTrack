@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -28,46 +29,62 @@ data class ProductDetails(
 
 @Composable
 fun ProductDetailsScreen(product: ProductDetails, modifier: Modifier = Modifier) {
-    Column(
+
+    Box(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
-
+        // Background image
         Image(
-            painter = painterResource(id = R.drawable.shampoo),
+            painter = painterResource(id = R.drawable.background_image), // 🖼️ your image
             contentDescription = null,
+            contentScale = ContentScale.Crop,
             modifier = Modifier
-                .size(140.dp)
-                .clip(CircleShape),
-            contentScale = ContentScale.Crop
+                .fillMaxSize()
+                .alpha(0.5f) // optional: dim background
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
-        Text(product.name, fontSize = 22.sp, fontWeight = FontWeight.Bold)
-        Text("Expires in ${product.expiryDays} days", color = Color(0xFFB65D00))
-
-        Spacer(modifier = Modifier.height(16.dp))
-        ExpiryStatusRow()
-
-        Spacer(modifier = Modifier.height(16.dp))
-        IngredientsCard(product.ingredients)
-
-        Spacer(modifier = Modifier.height(16.dp))
-        BarcodeCard(product.barcode)
-
-        Spacer(modifier = Modifier.height(16.dp))
-        ActionButtons()
-
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(
-            onClick = { /* Handle notify */ },
-            shape = RoundedCornerShape(20.dp),
-            modifier = Modifier.fillMaxWidth()
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Notify before expiry")
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Image(
+                painter = painterResource(id = R.drawable.shampoo),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(140.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(product.name, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+            Text("Expires in ${product.expiryDays} days", color = Color(0xFFB65D00))
+
+            Spacer(modifier = Modifier.height(16.dp))
+            ExpiryStatusRow()
+
+            Spacer(modifier = Modifier.height(16.dp))
+            IngredientsCard(product.ingredients)
+
+            Spacer(modifier = Modifier.height(16.dp))
+            BarcodeCard(product.barcode)
+
+            Spacer(modifier = Modifier.height(16.dp))
+            ActionButtons()
+
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = { /* Handle notify */ },
+                shape = RoundedCornerShape(20.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Notify before expiry")
+            }
         }
     }
 }
