@@ -127,4 +127,3 @@ fun WelcomeScreen(navController: NavController) {
         }
     }
 }
-

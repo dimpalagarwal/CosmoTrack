@@ -127,6 +127,7 @@ fun BasicDetailsScreen(navController: NavController) {
                     value = name,
                     onValueChange = { name = it },
                     label = { Text("Full Name", color = Color.Black) },
+                    textStyle = LocalTextStyle.current.copy(color = Color.Black),
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = Color.Black,
@@ -141,6 +142,7 @@ fun BasicDetailsScreen(navController: NavController) {
                     value = age,
                     onValueChange = { age = it },
                     label = { Text("Age", color = Color.Black) },
+                    textStyle = LocalTextStyle.current.copy(color = Color.Black),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -151,6 +153,7 @@ fun BasicDetailsScreen(navController: NavController) {
                     value = skinType,
                     onValueChange = { skinType = it },
                     label = { Text("Skin Type (e.g., Dry, Oily, Combination)", color = Color.Black) },
+                    textStyle = LocalTextStyle.current.copy(color = Color.Black),
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -160,6 +163,7 @@ fun BasicDetailsScreen(navController: NavController) {
                     value = hairType,
                     onValueChange = { hairType = it },
                     label = { Text("Hair Type (e.g., Curly, Straight, Wavy)", color = Color.Black) },
+                    textStyle = LocalTextStyle.current.copy(color = Color.Black),
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -169,6 +173,7 @@ fun BasicDetailsScreen(navController: NavController) {
                     value = preferredBrands,
                     onValueChange = { preferredBrands = it },
                     label = { Text("Preferred Beauty Brands", color = Color.Black) },
+                    textStyle = LocalTextStyle.current.copy(color = Color.Black),
                     modifier = Modifier.fillMaxWidth()
                 )
 

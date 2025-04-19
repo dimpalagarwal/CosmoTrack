@@ -65,6 +65,7 @@ fun SignInScreen(navController: NavController) {
             value = username,
             onValueChange = { username = it },
             label = { Text("Username", color = Color.Black) },
+            textStyle = LocalTextStyle.current.copy(color = Color.Black),
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color(0xFFE0E0E0), shape = RoundedCornerShape(10.dp))
@@ -79,6 +80,7 @@ fun SignInScreen(navController: NavController) {
             label = {
                 Text("Password", color = Color.Black) // explicitly set label text color
             },
+            textStyle = LocalTextStyle.current.copy(color = Color.Black),
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color(0xFFE0E0E0), shape = RoundedCornerShape(10.dp))
