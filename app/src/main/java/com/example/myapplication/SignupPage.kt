@@ -90,6 +90,7 @@ fun SignupScreen(navController: NavController) {
                 value = email,
                 onValueChange = { email = it },
                 label = { Text("Email", color = Color.Black) },
+                textStyle = LocalTextStyle.current.copy(color = Color.Black),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 modifier = Modifier.fillMaxWidth()
             )
@@ -101,6 +102,7 @@ fun SignupScreen(navController: NavController) {
                 value = password,
                 onValueChange = { password = it },
                 label = { Text("Password", color = Color.Black) },
+                textStyle = LocalTextStyle.current.copy(color = Color.Black),
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth()
             )
@@ -112,6 +114,7 @@ fun SignupScreen(navController: NavController) {
                 value = confirmPassword,
                 onValueChange = { confirmPassword = it },
                 label = { Text("Confirm Password", color = Color.Black) },
+                textStyle = LocalTextStyle.current.copy(color = Color.Black),
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth()
             )

@@ -138,7 +138,7 @@ fun DashboardScreen(
 
                 Spacer(modifier = Modifier.height(28.dp))
 
-                // Google Calendar Section
+                // Google Calendar Section with updated light brown and dark brown colors
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -161,26 +161,38 @@ fun DashboardScreen(
                                     .show()
                             }
                         },
-
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF3E0))
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFD5C2A1)) // Light brown background
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        Text("📅 Add your Google Calendar", fontWeight = FontWeight.Medium)
-                        Text("Sync your schedule for better planning.")
+                        Text(
+                            "📅 Add your Google Calendar",
+                            fontWeight = FontWeight.Medium,
+                            color = Color(0xFF6B4F32) // Dark brown text
+                        )
+                        Text(
+                            "Sync your schedule for better planning.",
+                            color = Color(0xFF6B4F32) // Dark brown text
+                        )
                     }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Extra Dashboard Features (Example)
-                Text("Tips for You", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+// Extra Dashboard Features
+                Text(
+                    "Tips for You",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color(0xFF704214) // Brown color for heading
+                )
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F5E9))
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFD2B79A)) // Light brown background
                 ) {
                     Text(
                         "Drink 8 glasses of water and don’t forget sunscreen!",
-                        modifier = Modifier.padding(16.dp)
+                        modifier = Modifier.padding(16.dp),
+                        color = Color.Black // Black tip text
                     )
                 }
 
