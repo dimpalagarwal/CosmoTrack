@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import android.widget.Toast
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.platform.LocalContext
 
 
@@ -28,8 +29,7 @@ fun SignInScreen(navController: NavController) {
     val auth = FirebaseAuth.getInstance()
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
         // Background image
         Image(
@@ -77,10 +77,9 @@ fun SignInScreen(navController: NavController) {
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = {
-                Text("Password", color = Color.Black) // explicitly set label text color
-            },
+            label = { Text("Password", color = Color.Black) },
             textStyle = LocalTextStyle.current.copy(color = Color.Black),
+            visualTransformation = PasswordVisualTransformation(), // 👈 hides the input
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color(0xFFE0E0E0), shape = RoundedCornerShape(10.dp))
