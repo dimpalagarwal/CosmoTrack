@@ -1,3 +1,4 @@
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -47,6 +48,8 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
+    implementation(libs.barcode.scanning)
+
 
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
@@ -55,6 +58,8 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.firebase.auth.ktx)
     implementation(libs.androidx.benchmark.macro)
+    implementation(libs.play.services.analytics.impl)
+    implementation(libs.protolite.well.known.types)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

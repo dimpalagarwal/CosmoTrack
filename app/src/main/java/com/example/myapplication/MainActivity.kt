@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,6 +9,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -18,12 +19,15 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.google.firebase.FirebaseApp
 import androidx.navigation.compose.*
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.example.myapplication.viewmodel.ProductViewModel
+import com.example.myapplication.viewmodel.UserProfileViewModel
+import com.google.android.gms.analytics.ecommerce.Product
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,7 +111,7 @@ fun WelcomeScreen(navController: NavController) {
             )
             Spacer(modifier = Modifier.height(25.dp))
             Text(
-                text = "appname",
+                text = "VanitySafe",
                 fontSize = 28.sp,
                 color = Color(0xFFC47F6E)
             )
@@ -139,4 +143,3 @@ fun WelcomeScreen(navController: NavController) {
         }
     }
 }
-
