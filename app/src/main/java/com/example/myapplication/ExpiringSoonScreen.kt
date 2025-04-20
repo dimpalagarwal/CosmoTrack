@@ -46,10 +46,11 @@ import com.google.rpc.Help
 @Preview(showBackground = true)
 @Composable
 fun ExpiringSoonScreenPreview() {
-    ExpiringSoonScreen()
+    val navController = rememberNavController()
+    ExpiringSoonScreen(navController = navController)
 }
 @Composable
-    fun ExpiringSoonScreen() {
+    fun ExpiringSoonScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -65,14 +66,18 @@ fun ExpiringSoonScreenPreview() {
                     .fillMaxWidth()
                     .padding(bottom = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
-            ) {
+            ) {IconButton(onClick = { navController.popBackStack() }) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Back",
+                )}
                 TextField(
-                    value = "",
-                    onValueChange = {},
-                    placeholder = { Text("Search") },
+                    value = searchText,
+                    onValueChange = {searchText = it},
+                    placeholder = { Text("Search", color= Color.Black) },
                     modifier = Modifier
                         .weight(1f)
-                        .height(48.dp),
+                        .height(50.dp),
                     shape = RoundedCornerShape(24.dp),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.White,
@@ -85,10 +90,6 @@ fun ExpiringSoonScreenPreview() {
                     Icon(Icons.Default.Person, contentDescription = "Profile")
                 }
 
-//                IconButton(onClick = { /* Help */ }) {
-//                    Icon(Icons.Default.Help, contentDescription = "Help")
-//                }
-            }
 
             Text(
                 text = "Expiring Soon",
