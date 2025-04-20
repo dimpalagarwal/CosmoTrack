@@ -223,6 +223,36 @@ fun DashboardScreen(
                     Text("Alternative uses for Expired Products")
                 }
 
+
+            
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Button(
+                    onClick = { navController.navigate("expiringSoon") },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("\u26A0 Expiring Products", color = Color.White)
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Button(
+                    onClick = {navController.navigate("alternateList") },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD2A66B)),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Alternative uses for Expired Products")
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Button(
+                    onClick = { navController.navigate("exploreNewLooks") },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD2A66B)),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Button(
@@ -230,6 +260,7 @@ fun DashboardScreen(
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD2A66B)),
                     modifier = Modifier.fillMaxWidth()
                 ) {
+
                     Text("Explore new looks")
                 }
             }
