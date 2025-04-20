@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,11 +19,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.firebase.FirebaseApp
 import androidx.navigation.compose.*
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.example.myapplication.viewmodel.UserProfileViewModel
 import com.google.android.gms.analytics.ecommerce.Product
 
 class MainActivity : ComponentActivity() {
@@ -43,22 +44,17 @@ class MainActivity : ComponentActivity() {
 fun AppNavigation() {
     val navController = rememberNavController()
     val scannedProducts = remember { mutableStateListOf<Product>() }
+    val userProfileViewModel: UserProfileViewModel = viewModel()
+
     NavHost(navController, startDestination = "welcome") {
         composable("welcome") { WelcomeScreen(navController) }
         composable("signin") { SignInScreen(navController) }
         composable("signup") { SignupScreen(navController) }
         composable("basicDetailsScreen") {
-            BasicDetailsScreen(navController)
+            BasicDetailsScreen(navController, userProfileViewModel)
         }
-        composable("dashboardScreen") { backStackEntry ->
-            val name = backStackEntry.savedStateHandle.get<String>("name") ?: ""
-            val imageUri = backStackEntry.savedStateHandle.get<Uri>("imageUri")
-            DashboardScreen(
-                name = name,
-                imageUri = imageUri,
-                navController = navController,
-                scannedProducts = scannedProducts
-            )
+        composable("dashboardScreen") {
+            DashboardScreen("Dimpal", navController, scannedProducts, userProfileViewModel)
         }
         composable("scannerScreen") {
             ScannerScreen(navController = navController)

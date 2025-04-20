@@ -34,17 +34,17 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Help
+//import androidx.compose.material.icons.filled.Help
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.width
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
+import com.google.rpc.Help
 
 
-
-    @Composable
+@Composable
     fun ExpiringSoonScreen() {
         Column(
             modifier = Modifier
@@ -78,9 +78,9 @@ import androidx.compose.ui.text.TextStyle
                     Icon(Icons.Default.Person, contentDescription = "Profile")
                 }
 
-                IconButton(onClick = { /* Help */ }) {
-                    Icon(Icons.Default.Help, contentDescription = "Help")
-                }
+//                IconButton(onClick = { /* Help */ }) {
+//                    Icon(Icons.Default.Help, contentDescription = "Help")
+//                }
             }
 
             Text(

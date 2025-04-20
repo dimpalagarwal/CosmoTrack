@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.androidx.benchmark.macro)
     implementation(libs.play.services.analytics.impl)
+    implementation(libs.protolite.well.known.types)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
