@@ -40,24 +40,41 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
+    val scannedProducts = remember { mutableStateListOf<Product>() }
+    val userProfileViewModel: UserProfileViewModel = viewModel()
+    val productViewModel: ProductViewModel = viewModel()
 
     NavHost(navController, startDestination = "welcome") {
         composable("welcome") { WelcomeScreen(navController) }
         composable("signin") { SignInScreen(navController) }
         composable("signup") { SignupScreen(navController) }
         composable("basicDetailsScreen") {
-            BasicDetailsScreen(navController)
+            BasicDetailsScreen(navController, userProfileViewModel)
         }
-        composable("dashboardScreen") { backStackEntry ->
-            val name = backStackEntry.savedStateHandle.get<String>("name") ?: ""
-            val imageUri = backStackEntry.savedStateHandle.get<Uri>("imageUri")
-            DashboardScreen(name = name, imageUri = imageUri, navController = navController)
+        composable("dashboardScreen") {
+            DashboardScreen("Dimpal", navController, scannedProducts, userProfileViewModel)
         }
         composable("scannerScreen") {
-            ScannerScreen { scannedData ->
-                navController.navigate("productDetailsScreen/${Uri.encode(scannedData)}")
+            ScannerScreen(navController = navController, productViewModel = productViewModel)
+        }
+        composable("productDetails") {
+            productViewModel.selectedProduct?.let {
+                ProductDetailsScreen(product = it)
             }
         }
+        composable("exploreNewLooks") {
+            ExploreNewLooksScreen(navController)
+        }
+        composable("expiringSoon") {
+            ExpiringSoonScreen(navController)
+        }
+        composable("alternateList") {
+            AlternateList(navController)
+        }
+        composable("alternateUse") {
+            ExpirationDetailsScreen(navController = navController)
+        }
+
     }
 }
 
