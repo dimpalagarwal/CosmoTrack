@@ -153,25 +153,37 @@ fun DashboardScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            
+                Spacer(modifier = Modifier.height(12.dp))
 
-            Text("Recently Added Products", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
-            repeat(2) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 4.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF3E5F5))
+                Button(
+                    onClick = { navController.navigate("expiringSoon") },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        text = "Product ${it + 1}",
-                        modifier = Modifier.padding(16.dp)
-                    )
+                    Text("\u26A0 Expiring Products", color = Color.White)
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Button(
+                    onClick = {navController.navigate("alternateList") },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD2A66B)),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Alternative uses for Expired Products")
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Button(
+                    onClick = { navController.navigate("exploreNewLooks") },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD2A66B)),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Explore new looks")
                 }
             }
         }
     }
 }
-
-
-
