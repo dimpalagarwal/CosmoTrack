@@ -29,11 +29,12 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
-//import androidx.compose.material.icons.filled.Help
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.painterResource
@@ -42,14 +43,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Brush
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+
 
 @Preview(showBackground = true)
 @Composable
 fun AlternateListPreview() {
-    AlternateList()
+    val navController = rememberNavController()
+    AlternateList(navController = navController)
 }
 @Composable
-fun AlternateList() {
+fun AlternateList(navController: NavController) {
     var searchText by remember { mutableStateOf("") }
 
     val items = listOf(
@@ -80,14 +85,19 @@ fun AlternateList() {
                 .fillMaxWidth()
                 .padding(bottom = 12.dp),
             verticalAlignment = Alignment.CenterVertically
-        ) {
+        ) {IconButton(onClick = { navController.popBackStack() }) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = "Back",
+            )}
             TextField(
                 value = searchText,
                 onValueChange = { searchText = it },
-                placeholder = { Text("Search") },
+                placeholder = { Text("Search", color= Color.Black) },
+                textStyle = LocalTextStyle.current.copy(color = Color.Black),
                 modifier = Modifier
                     .weight(1f)
-                    .height(48.dp),
+                    .height(50.dp),
                 shape = RoundedCornerShape(24.dp),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color.White,
@@ -111,7 +121,11 @@ fun AlternateList() {
         )
 
         filteredItems.forEach { (name, imageRes) ->
-            ItemBar(itemName = name, imageResId = imageRes, onClick = { /* TODO */ })
+            ItemBar(itemName = name, imageResId = imageRes, onClick = {
+                if (name == "Shampoo") {
+                navController.navigate("alternateUse")
+            } 
+            })
         }
     }
 }
