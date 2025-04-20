@@ -25,6 +25,7 @@ import com.google.firebase.FirebaseApp
 import androidx.navigation.compose.*
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.example.myapplication.viewmodel.ProductViewModel
 import com.example.myapplication.viewmodel.UserProfileViewModel
 import com.google.android.gms.analytics.ecommerce.Product
 
@@ -45,6 +46,7 @@ fun AppNavigation() {
     val navController = rememberNavController()
     val scannedProducts = remember { mutableStateListOf<Product>() }
     val userProfileViewModel: UserProfileViewModel = viewModel()
+    val productViewModel: ProductViewModel = viewModel()
 
     NavHost(navController, startDestination = "welcome") {
         composable("welcome") { WelcomeScreen(navController) }
@@ -57,7 +59,12 @@ fun AppNavigation() {
             DashboardScreen("Dimpal", navController, scannedProducts, userProfileViewModel)
         }
         composable("scannerScreen") {
-            ScannerScreen(navController = navController)
+            ScannerScreen(navController = navController, productViewModel = productViewModel)
+        }
+        composable("productDetails") {
+            productViewModel.selectedProduct?.let {
+                ProductDetailsScreen(product = it)
+            }
         }
     }
 }

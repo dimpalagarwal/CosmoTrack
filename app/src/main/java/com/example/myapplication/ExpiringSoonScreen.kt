@@ -43,13 +43,20 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 //import com.google.rpc.Help
 
-
+@Preview(showBackground = true)
+@Composable
+fun ExpiringSoonScreenPreview() {
+    ExpiringSoonScreen()
+}
 @Composable
     fun ExpiringSoonScreen() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFFFFF8F0))
+                .background (
+                    Brush.verticalGradient(
+                        colors = listOf(Color(0xFFFFF0DA), Color(0xFFE39562))
+                    ))
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState())
         ) {

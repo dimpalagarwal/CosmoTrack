@@ -29,7 +29,8 @@ fun SignInScreen(navController: NavController) {
     val auth = FirebaseAuth.getInstance()
 
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
     ) {
         // Background image
         Image(
@@ -44,7 +45,7 @@ fun SignInScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+//            .background(Color.White)
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
