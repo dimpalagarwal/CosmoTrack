@@ -39,9 +39,8 @@ fun DashboardScreen(
 
 ) {
 
-    val viewModel: UserProfileViewModel = viewModel()
-    val imageUri: Uri? = viewModel.profileImageUri.value
-    
+    val imageUri: Uri? = userProfileViewModel.profileImageUri.value
+
     var showOptions by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
@@ -224,7 +223,7 @@ fun DashboardScreen(
                 }
 
 
-            
+
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Button(
@@ -238,7 +237,7 @@ fun DashboardScreen(
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Button(
-                    onClick = {navController.navigate("alternateList") },
+                    onClick = { navController.navigate("alternateList") },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD2A66B)),
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -253,15 +252,16 @@ fun DashboardScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
 
-                Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
 
-                Button(
-                    onClick = { /* Navigate to Explore New Looks */ },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD2A66B)),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
+                    Button(
+                        onClick = { /* Navigate to Explore New Looks */ },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD2A66B)),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
 
-                    Text("Explore new looks")
+                        Text("Explore new looks")
+                    }
                 }
             }
         }

@@ -43,7 +43,7 @@ fun BasicDetailsScreen(navController: NavController, userProfileViewModel: UserP
     ) { uri: Uri? ->
         selectedImageUri = uri
         uri?.let {
-            viewModel.setProfileImage(it) // ✅ Updates ViewModel
+            userProfileViewModel.setProfileImage(it) // ✅ Updates ViewModel
         }
     }
     Box(
