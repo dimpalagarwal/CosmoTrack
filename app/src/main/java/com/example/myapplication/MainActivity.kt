@@ -66,6 +66,19 @@ fun AppNavigation() {
                 ProductDetailsScreen(product = it)
             }
         }
+        composable("exploreNewLooks") {
+            ExploreNewLooksScreen(navController)
+        }
+        composable("expiringSoon") {
+            ExpiringSoonScreen(navController)
+        }
+        composable("alternateList") {
+            AlternateList(navController)
+        }
+        composable("alternateUse") {
+            ExpirationDetailsScreen(navController = navController)
+        }
+
     }
 }
 
