@@ -41,7 +41,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
-import com.google.rpc.Help
+//import com.google.rpc.Help
 
 @Preview(showBackground = true)
 @Composable
