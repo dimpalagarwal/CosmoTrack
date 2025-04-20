@@ -53,7 +53,10 @@ fun ExpiringSoonScreenPreview() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFFFFF8F0))
+                .background (
+                    Brush.verticalGradient(
+                        colors = listOf(Color(0xFFFFF0DA), Color(0xFFE39562))
+                    ))
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState())
         ) {
