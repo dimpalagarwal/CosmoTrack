@@ -43,7 +43,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import com.google.rpc.Help
 
-
+@Preview(showBackground = true)
+@Composable
+fun ExpiringSoonScreenPreview() {
+    ExpiringSoonScreen()
+}
 @Composable
     fun ExpiringSoonScreen() {
         Column(
