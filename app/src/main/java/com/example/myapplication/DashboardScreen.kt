@@ -111,15 +111,14 @@ fun DashboardScreen(
                                 .clip(CircleShape)
                         )
                     } else {
-                        Box(
+                        Image(
+                            painter = painterResource(id = R.drawable.default_profile),
+                            contentDescription = "Default Profile Photo",
                             modifier = Modifier
-                                .size(100.dp)
+                                .size(80.dp)
                                 .clip(CircleShape)
-                                .background(Color.LightGray),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text("No Photo", fontSize = 15.sp)
-                        }
+                                .background(Color.LightGray)
+                        )
                     }
 
                     Spacer(modifier = Modifier.weight(1f))
