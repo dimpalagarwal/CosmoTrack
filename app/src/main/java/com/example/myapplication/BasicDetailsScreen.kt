@@ -69,7 +69,9 @@ fun BasicDetailsScreen(navController: NavController, userProfileViewModel: UserP
             TextButton(onClick = { /* TODO: Handle Edit */ }) {
                 Text("Edit", color = Color(0xFFB23B3B), fontWeight = FontWeight.Bold)
             }
-            TextButton(onClick = { /* TODO: Handle Skip */ }) {
+            TextButton(onClick = {
+                navController.navigate("dashboard")
+            }) {
                 Text("Skip", color = Color(0xFFB23B3B), fontWeight = FontWeight.Bold)
             }
         }
