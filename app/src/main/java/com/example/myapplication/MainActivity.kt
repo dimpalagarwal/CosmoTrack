@@ -55,8 +55,21 @@ fun AppNavigation() {
         composable("basicDetailsScreen") {
             BasicDetailsScreen(navController, userProfileViewModel)
         }
-        composable("dashboardScreen") {
-            DashboardScreen("Dimpal", navController, scannedProducts, userProfileViewModel)
+        composable("dashboardScreen") { backStackEntry ->
+
+            // 👇 This grabs the name you saved from BasicDetailsScreen
+            val name = navController.previousBackStackEntry
+                ?.savedStateHandle
+                ?.get<String>("name") ?: "User"
+
+            val userProfileViewModel: UserProfileViewModel = viewModel()
+
+            DashboardScreen(
+                name = name,
+                navController = navController,
+                scannedProducts = scannedProducts, // or an empty SnapshotStateList
+                userProfileViewModel = userProfileViewModel
+            )
         }
         composable("scannerScreen") {
             ScannerScreen(navController = navController, productViewModel = productViewModel)
