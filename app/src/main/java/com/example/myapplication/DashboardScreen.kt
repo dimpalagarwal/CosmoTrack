@@ -1,3 +1,4 @@
+
 package com.example.myapplication
 
 // Required Imports
@@ -32,7 +33,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.DpOffset
 import androidx.navigation.NavController
 import com.example.myapplication.viewmodel.UserProfileViewModel
 import com.google.android.gms.analytics.ecommerce.Product
@@ -47,25 +51,46 @@ fun DashboardScreen(
     var showOptions by remember { mutableStateOf(false) }
     val context = LocalContext.current
     val imageUri: Uri? = userProfileViewModel.profileImageUri.value
+    val fabMenuAnchor = remember { mutableStateOf<Offset?>(null) }
 
 
     Scaffold(
         bottomBar = {
-            BottomNavigationBar()
+            DashboardBottomNavigationBar()
         },
-
         floatingActionButton = {
-            Box {
+            Box(modifier = Modifier.fillMaxSize()) {
+                // Chat with AI Bot FAB (positioned above the Add FAB)
+                FloatingActionButton(
+                    onClick = { /* TODO: Handle Chat with AI Click */ },
+                    containerColor = Color(0xFFD8D4FF),
+                    shape = CircleShape,
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(end = 16.dp, bottom = 96.dp) // Positioned above the + FAB
+                ) {
+                    Icon(painter = painterResource(id = R.drawable.baseline_smart_toy_24), contentDescription = "Chat Bot")
+                }
+
+                // Add FAB
                 FloatingActionButton(
                     onClick = { showOptions = !showOptions },
-                    containerColor = Color(0xFFffffff)
+                    containerColor = Color(0xFFF7EBED),
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(end = 16.dp, bottom = 16.dp)
+                        .onGloballyPositioned { coordinates ->
+                            val localOffset = coordinates.localToWindow(Offset.Zero)
+                            fabMenuAnchor.value = localOffset
+                        }
                 ) {
                     Icon(Icons.Default.Add, contentDescription = "Add")
                 }
 
                 DropdownMenu(
                     expanded = showOptions,
-                    onDismissRequest = { showOptions = false }
+                    onDismissRequest = { showOptions = false },
+                    offset = DpOffset(x = (-10).dp, y = (-180).dp), // adjust based on testing
                 ) {
                     DropdownMenuItem(
                         text = { Text("Scanner") },
@@ -83,9 +108,8 @@ fun DashboardScreen(
                     )
                 }
             }
-        },
-//        floatingActionButtonPosition = FabPosition.End, // Optional: or FabPosition.Center
-//        isFloatingActionButtonDocked = true
+        }
+
 
 
     ) { paddingValues ->
@@ -93,7 +117,7 @@ fun DashboardScreen(
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize()
-                .background(Color(0xFFF6EBD9))
+                .background(Color(0xFFFFFFFF))
                 .padding(16.dp)
         ) {
             TopGreetingSection(name = name)
@@ -120,7 +144,7 @@ fun DashboardScreen(
                             Toast.makeText(context, "No Calendar app found", Toast.LENGTH_SHORT).show()
                         }
                     },
-                colors = CardDefaults.cardColors(containerColor = Color(0xFFFFFFFF)), // White background
+                colors = CardDefaults.cardColors(containerColor = Color(0xFFF7EBED)), // White background
                 elevation = CardDefaults.cardElevation(4.dp)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
@@ -167,12 +191,6 @@ fun TopGreetingSection(name: String) {
                 Text("You're glowing today!", color = Color.DarkGray)
             }
         }
-        Button(
-            onClick = { /* TODO: Open AI Chat */ },
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD8D4FF))
-        ) {
-            Text("Chat with AI")
-        }
     }
 }
 
@@ -183,7 +201,7 @@ fun CardInfo(title: String, content: String) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 6.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFF7EBED)),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -195,7 +213,7 @@ fun CardInfo(title: String, content: String) {
 }
 
 @Composable
-fun BottomNavigationBar() {
+fun DashboardBottomNavigationBar() {
     NavigationBar(
         containerColor = Color(0xFF800020)
     ) {

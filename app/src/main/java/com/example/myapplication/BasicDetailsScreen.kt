@@ -51,14 +51,14 @@ fun BasicDetailsScreen(navController: NavController, userProfileViewModel: UserP
             .fillMaxSize()
     ) {
         // Background image
-        Image(
-            painter = painterResource(id = R.drawable.background_image),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxSize()
-                .alpha(0.5f) // reduce opacity
-        )
+//        Image(
+//            painter = painterResource(id = R.drawable.background_image),
+//            contentDescription = null,
+//            contentScale = ContentScale.Crop,
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .alpha(0.5f) // reduce opacity
+//        )
 
         Row(
             modifier = Modifier
@@ -185,7 +185,7 @@ fun BasicDetailsScreen(navController: NavController, userProfileViewModel: UserP
                         }
                         navController.navigate("dashboardScreen")
                     }, // Navigate to Dashboard
-                    colors = ButtonDefaults.buttonColors(Color(0xFFC87F4F)),
+                    colors = ButtonDefaults.buttonColors(Color(0xFF800020)),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(

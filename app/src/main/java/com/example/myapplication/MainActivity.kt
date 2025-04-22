@@ -17,6 +17,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -100,11 +101,7 @@ fun WelcomeScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    colors = listOf(Color(0xFFFFF0DA), Color(0xFFE39562))
-                )
-            ),
+            .background(Color(0xFF800020)),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -115,18 +112,19 @@ fun WelcomeScreen(navController: NavController) {
             Text(
                 text = "Hey, gorgeous!",
                 fontSize = 24.sp,
-                color = Color(0xFF5D4037)
+                color = Color(0xFFF4A5B5)
             )
             Text(
                 text = "welcome to",
                 fontSize = 14.sp,
-                color = Color(0xFF5D4037)
+                color = Color(0xFFF4A5B5)
             )
             Spacer(modifier = Modifier.height(25.dp))
             Text(
                 text = "VanitySafe",
                 fontSize = 28.sp,
-                color = Color(0xFFC47F6E)
+                color = Color(0xFFFFC0CB),
+                fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(20.dp))
             Image(
@@ -138,20 +136,20 @@ fun WelcomeScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(20.dp))
             Button(
                 onClick = { navController.navigate("signup") },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF5D1B8)),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE39498)),
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier.width(200.dp)
             ) {
-                Text(text = "Sign up", fontSize = 18.sp, color = Color.Black)
+                Text(text = "Sign up", fontSize = 18.sp, color = Color(0xFF661D26))
             }
             Spacer(modifier = Modifier.height(10.dp))
             Button(
                 onClick = { navController.navigate("signin") },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF5D1B8)),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE39498)),
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier.width(200.dp)
             ) {
-                Text(text = "Sign in", fontSize = 18.sp, color = Color.Black)
+                Text(text = "Sign in", fontSize = 18.sp, color = Color(0xFF661D26))
             }
         }
     }
