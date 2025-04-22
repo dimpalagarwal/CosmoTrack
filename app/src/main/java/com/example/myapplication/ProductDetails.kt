@@ -20,6 +20,11 @@ import androidx.compose.ui.unit.sp
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import com.example.myapplication.R
 
+val Maroon = Color(0xFF800020)
+val LightMaroon = Color(0xFFD8B4B4)
+val MaroonCard = Color(0xFFB85C5C)
+val SoftWhite = Color(0xFFFFF8F7)
+
 data class ProductDetails(
     val name: String,
     val expiryDays: Int,
@@ -29,19 +34,17 @@ data class ProductDetails(
 
 @Composable
 fun ProductDetailsScreen(product: ProductDetails, modifier: Modifier = Modifier) {
-
     Box(
         modifier = modifier
             .fillMaxSize()
     ) {
-        // Background image
         Image(
-            painter = painterResource(id = R.drawable.background_image), // 🖼️ your image
+            painter = painterResource(id = R.drawable.background_image),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxSize()
-                .alpha(0.5f) // optional: dim background
+                .alpha(0.4f)
         )
 
         Column(
@@ -62,7 +65,7 @@ fun ProductDetailsScreen(product: ProductDetails, modifier: Modifier = Modifier)
             )
 
             Spacer(modifier = Modifier.height(12.dp))
-            Text(product.name, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+            Text(product.name, fontSize = 22.sp, fontWeight = FontWeight.Bold, color = Maroon)
             Text("Expires in ${product.expiryDays} days", color = Color(0xFFB65D00))
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -81,9 +84,10 @@ fun ProductDetailsScreen(product: ProductDetails, modifier: Modifier = Modifier)
             Button(
                 onClick = { /* Handle notify */ },
                 shape = RoundedCornerShape(20.dp),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = Maroon)
             ) {
-                Text("Notify before expiry")
+                Text("Notify before expiry", color = Color.White)
             }
         }
     }
@@ -107,7 +111,7 @@ fun StatusButton(text: String, selected: Boolean) {
         onClick = { },
         shape = RoundedCornerShape(50),
         colors = ButtonDefaults.buttonColors(
-            containerColor = if (selected) Color(0xFF0066FF) else Color(0xFFCE946B),
+            containerColor = if (selected) Maroon else LightMaroon,
             contentColor = Color.White
         )
     ) {
@@ -120,7 +124,7 @@ fun IngredientsCard(ingredients: String) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFD7824E))
+        colors = CardDefaults.cardColors(containerColor = MaroonCard)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text("📋 Ingredients information", fontWeight = FontWeight.Bold, color = Color.White)
@@ -135,7 +139,7 @@ fun BarcodeCard(barcode: String) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFBD6635))
+        colors = CardDefaults.cardColors(containerColor = Maroon.copy(alpha = 0.9f))
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text("📦 Barcode Number", fontWeight = FontWeight.Bold, color = Color.White)
@@ -154,19 +158,19 @@ fun ActionButtons() {
         Button(
             onClick = { },
             shape = RoundedCornerShape(20.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF6B041)),
+            colors = ButtonDefaults.buttonColors(containerColor = Maroon.copy(alpha = 0.85f)),
             modifier = Modifier.weight(1f)
         ) {
-            Text("Edit")
+            Text("Edit", color = Color.White)
         }
         Spacer(modifier = Modifier.width(16.dp))
         Button(
             onClick = { },
             shape = RoundedCornerShape(20.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD65141)),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB03030)),
             modifier = Modifier.weight(1f)
         ) {
-            Text("Delete")
+            Text("Delete", color = Color.White)
         }
     }
 }
