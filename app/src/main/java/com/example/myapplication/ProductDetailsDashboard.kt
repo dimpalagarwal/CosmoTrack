@@ -10,90 +10,82 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-data class Product(val name: String, val imageRes: Int)
+data class Product(val name: String, val imageRes: Int, var quantity: Int = 1)
 
 @Composable
 fun ProductDetailsScreen() {
-    val products = listOf(
-        Product("Shampoo", R.drawable.shampoo),
-        Product("Concealer", R.drawable.concealer),
-        Product("Moisturizer", R.drawable.moisturizer),
-        Product("Fash Wash", R.drawable.simple_face_wash),
-        Product("Vaseline", R.drawable.vaseline),
-        Product("Toner", R.drawable.toner)
-    )
+    var searchQuery by remember { mutableStateOf("") }
+
+    val allProducts = remember {
+        mutableStateListOf(
+            Product("Shampoo", R.drawable.shampoo),
+            Product("Concealer", R.drawable.concealer),
+            Product("Moisturizer", R.drawable.moisturizer),
+            Product("Face Wash", R.drawable.simple_face_wash),
+            Product("Vaseline", R.drawable.vaseline),
+            Product("Toner", R.drawable.toner)
+        )
+    }
+
+    val filteredProducts = allProducts.filter {
+        it.name.contains(searchQuery, ignoreCase = true)
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    listOf(Color(0xFFFDE7DC), Color(0xFFECA77F))
-                )
-            )
+            .background(Color(0xFFFFF8F7))
             .padding(16.dp)
     ) {
         // Header
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(
-                    brush = Brush.horizontalGradient(
-                        listOf(Color(0xFFD13E80), Color(0xFFFF9F7F))
-                    ),
-                    shape = RoundedCornerShape(16.dp)
-                )
-                .padding(vertical = 12.dp),
+                .background(Color(0xFF800020), shape = RoundedCornerShape(16.dp))
+                .padding(vertical = 14.dp),
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "Product Details",
-                fontWeight = FontWeight.Bold,
-                fontStyle = FontStyle.Italic,
+                text = "My Makeup Shelf",
                 color = Color.White,
-                fontSize = 20.sp
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
             )
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // Search Bar
-        Box(
+        OutlinedTextField(
+            value = searchQuery,
+            onValueChange = { searchQuery = it },
+            placeholder = { Text("Search products") },
+            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp)
                 .clip(RoundedCornerShape(25.dp))
-                .background(Color.White)
-                .padding(horizontal = 20.dp),
-            contentAlignment = Alignment.CenterStart
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text("Search", color = Color.Gray, modifier = Modifier.weight(1f))
-                Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.Gray)
-            }
-        }
+                .background(Color.White),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = Color.White,
+                unfocusedContainerColor = Color.White
+            )
+        )
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         // Product Grid
         LazyVerticalGrid(
@@ -102,41 +94,34 @@ fun ProductDetailsScreen() {
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(bottom = 80.dp)
         ) {
-            items(products) { product ->
-                ProductCard(product.name, product.imageRes)
+            items(filteredProducts) { product ->
+                ProductCard(product)
             }
         }
     }
 }
 
 @Composable
-fun ProductCard(name: String, imageRes: Int) {
+fun ProductCard(product: Product) {
+    var quantity by remember { mutableStateOf(product.quantity) }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(0.8f),
+            .aspectRatio(0.85f),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFF3B088)),
-        elevation = CardDefaults.cardElevation(6.dp)
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFF7EBED)),
+        elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
+            modifier = Modifier
+                .padding(12.dp),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = name,
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold,
-                fontStyle = FontStyle.Italic,
-                color = Color.Black
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
             Image(
-                painter = painterResource(id = imageRes),
-                contentDescription = name,
+                painter = painterResource(id = product.imageRes),
+                contentDescription = product.name,
                 modifier = Modifier
                     .size(80.dp)
                     .padding(8.dp),
@@ -145,42 +130,60 @@ fun ProductCard(name: String, imageRes: Int) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(36.dp)
-                        .clip(CircleShape)
-                        .background(Color.White)
-                        .clickable { /* Decrease quantity */ },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("-", fontSize = 20.sp, color = Color.Black)
-                }
+            Text(
+                text = product.name,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = Color(0xFF800020)
+            )
 
-                Box(
-                    modifier = Modifier
-                        .size(36.dp)
-                        .clip(CircleShape)
-                        .background(Color.White)
-                        .clickable { /* Increase quantity */ },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("+", fontSize = 20.sp, color = Color.Black)
-                }
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Quantity Control Row
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                CircleIcon("-", onClick = {
+                    if (quantity > 1) quantity--
+                })
+
+                Text(
+                    text = quantity.toString(),
+                    fontSize = 16.sp,
+                    color = Color(0xFF800020),
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                )
+
+                CircleIcon("+", onClick = {
+                    quantity++
+                })
             }
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(
-                onClick = { /* View Details */ },
-                colors = ButtonDefaults.buttonColors(containerColor = Color.White)
+                onClick = { /* Navigate to details */ },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF800020))
             ) {
-                Text("View Details", color = Color.Black, fontSize = 12.sp)
+                Text("Details", color = Color.White, fontSize = 12.sp)
             }
         }
+    }
+}
+
+@Composable
+fun CircleIcon(symbol: String, onClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .size(30.dp)
+            .clip(CircleShape)
+            .background(Color.White)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = symbol, fontSize = 18.sp, color = Color(0xFF800020))
     }
 }
 
