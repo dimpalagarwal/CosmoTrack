@@ -32,9 +32,12 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.painterResource
@@ -42,6 +45,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -68,67 +72,90 @@ fun AlternateList(navController: NavController) {
         Pair("Eye Shadow", R.drawable.eye_shadow)
     )
 
-    val filteredItems = items.filter {it.first.contains(searchText, ignoreCase = true) }
+    val filteredItems = items.filter { it.first.contains(searchText, ignoreCase = true) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background (
-                Brush.verticalGradient(
-                colors = listOf(Color(0xFFFFF0DA), Color(0xFFE39562))
-            ))
-            .padding(16.dp)
-            .verticalScroll(rememberScrollState())
-    ) {
-        Row(
+    Scaffold(
+        bottomBar = {
+            DashboardBottomNavigationBar()
+        },
+        containerColor = Color.White
+    ) { innerPadding ->
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {IconButton(onClick = { navController.popBackStack() }) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back",
-            )}
+                .padding(innerPadding)
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+        ) {
+            // 🔷 Top Thin Bar with Icons Only
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .background(Color(0xFF800020))
+                    .padding(horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Back",
+                        tint = Color.White
+                    )
+                }
+                Text(
+                    text = "Alternate Uses",
+                    color = Color.White,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+                IconButton(onClick = { /* Profile click */ }) {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "Profile",
+                        tint = Color.White
+                    )
+                }
+            }
+
+            // 🔍 Search Bar
             TextField(
                 value = searchText,
                 onValueChange = { searchText = it },
-                placeholder = { Text("Search", color= Color.Black) },
+                placeholder = {
+                    Text("Search", color = Color.Black)
+                },
                 textStyle = LocalTextStyle.current.copy(color = Color.Black),
                 modifier = Modifier
-                    .weight(1f)
+                    .fillMaxWidth()
+                    .padding(16.dp)
                     .height(50.dp),
                 shape = RoundedCornerShape(24.dp),
                 colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White
+                    focusedContainerColor = Color(0xFFE0E0E0),
+                    unfocusedContainerColor = Color(0xFFE0E0E0),
+                    disabledContainerColor = Color(0xFFE0E0E0),
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
                 )
             )
 
-            IconButton(onClick = { /* Profile */ }) {
-                Icon(Icons.Default.Person, contentDescription = "Profile")
+            DividerWithShadow()
+            Spacer(modifier = Modifier.height(12.dp))
+
+            filteredItems.forEach { (name, imageRes) ->
+                ItemBar(itemName = name, imageResId = imageRes, onClick = {
+                    if (name == "Shampoo") {
+                        navController.navigate("alternateUse")
+                    }
+                })
             }
-        }
 
-        Text(
-            text = "Alternate Uses",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(bottom = 16.dp)
-        )
-
-        filteredItems.forEach { (name, imageRes) ->
-            ItemBar(itemName = name, imageResId = imageRes, onClick = {
-                if (name == "Shampoo") {
-                navController.navigate("alternateUse")
-            } 
-            })
+            Spacer(modifier = Modifier.height(12.dp))
         }
     }
 }
+
 
 @Composable
 fun ItemBar(
@@ -139,9 +166,9 @@ fun ItemBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 6.dp)
+            .padding(horizontal = 12.dp, vertical = 6.dp)
             .clip(RoundedCornerShape(12.dp))
-            .background(Color(0xFFFFF8F0))
+            .background(Color(0xFFF7EBED))
             .clickable { onClick() }
             .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -166,4 +193,5 @@ fun ItemBar(
         )
     }
 }
+
 
