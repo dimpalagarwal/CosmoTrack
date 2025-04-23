@@ -18,7 +18,8 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.platform.LocalContext
-
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun SignInScreen(navController: NavController) {
@@ -33,14 +34,14 @@ fun SignInScreen(navController: NavController) {
             .fillMaxSize()
     ) {
         // Background image
-        Image(
-            painter = painterResource(id = R.drawable.background_image),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxSize()
-                .alpha(0.5f) // reduce opacity
-        )
+//        Image(
+//            painter = painterResource(id = R.drawable.background_image),
+//            contentDescription = null,
+//            contentScale = ContentScale.Crop,
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .alpha(0.5f) // reduce opacity
+//        )
 
     Column(
         modifier = Modifier
@@ -101,7 +102,7 @@ fun SignInScreen(navController: NavController) {
             }
             Text(
                 text = "Forgot Password",
-                color = Color.Magenta,
+                color = Color(0xFF7B1E3C),
                 modifier = Modifier.clickable { /* Forgot Password Logic */ }
             )
         }
@@ -125,7 +126,7 @@ fun SignInScreen(navController: NavController) {
                     Toast.makeText(context, "Please enter email and password", Toast.LENGTH_SHORT).show()
                 }
             },
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFC87F4F)),
+            colors = ButtonDefaults.buttonColors(containerColor = Maroon),
             shape = RoundedCornerShape(20.dp),
             modifier = Modifier
                 .fillMaxWidth()
@@ -158,3 +159,10 @@ fun SignInScreen(navController: NavController) {
     }
 
 }
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun SignInScreenPreview() {
+//    // Use a dummy NavController for preview
+//    val navController = rememberNavController()
+//    SignInScreen(navController = navController)
+//}

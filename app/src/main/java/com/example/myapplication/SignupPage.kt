@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 
 @Composable
 fun SignupScreen(navController: NavController) {
@@ -36,14 +37,14 @@ fun SignupScreen(navController: NavController) {
             .fillMaxSize()
     ) {
         // Background image
-        Image(
-            painter = painterResource(id = R.drawable.background_image),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxSize()
-                .alpha(0.5f) // reduce opacity
-        )
+//        Image(
+//            painter = painterResource(id = R.drawable.background_image),
+//            contentDescription = null,
+//            contentScale = ContentScale.Crop,
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .alpha(0.5f) // reduce opacity
+//        )
 
         Column(
             modifier = Modifier
@@ -58,6 +59,7 @@ fun SignupScreen(navController: NavController) {
             Text(
                 text = "SIGN UP",
                 fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
                 color = Color(0xFFA23E48),
                 modifier = Modifier.padding(top = 40.dp)
             )
@@ -164,7 +166,7 @@ fun SignupScreen(navController: NavController) {
                         ).show()
                     }
                 },
-                colors = ButtonDefaults.buttonColors(Color(0xFFC87F4F)),
+                colors = ButtonDefaults.buttonColors(containerColor = Maroon),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Sign Up", fontSize = 30.sp, color = Color.White)
