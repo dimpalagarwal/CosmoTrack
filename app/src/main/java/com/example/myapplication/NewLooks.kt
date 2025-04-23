@@ -159,9 +159,9 @@ fun LookCard(look: Look, onClick: () -> Unit) {
             text = look.name,
             fontSize = 16.sp,
             fontWeight = FontWeight.Medium,
-            color = Color(0xFF5B3924),
+            color = Color(0xFFFFF8F7),
             modifier = Modifier
-                .background(Color(0xFFE0CBB5), RoundedCornerShape(24.dp))
+                .background(Color(0xFF800020), RoundedCornerShape(24.dp))
                 .padding(horizontal = 16.dp, vertical = 6.dp)
         )
     }
