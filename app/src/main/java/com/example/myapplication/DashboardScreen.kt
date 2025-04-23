@@ -36,8 +36,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.viewmodel.UserProfileViewModel
 import com.google.android.gms.analytics.ecommerce.Product
 
@@ -214,6 +216,7 @@ fun CardInfo(title: String, content: String) {
 
 @Composable
 fun DashboardBottomNavigationBar() {
+    val navController = rememberNavController()
     NavigationBar(
         containerColor = Color(0xFF800020)
     ) {
@@ -236,7 +239,9 @@ fun DashboardBottomNavigationBar() {
             icon = { Icon(Icons.Default.List, contentDescription = "Products") },
             label = { Text("Products") },
             selected = false,
-            onClick = {},
+            onClick = {
+                navController.navigate("ProductDashboard")
+            },
             colors = navItemColors
         )
         NavigationBarItem(
@@ -250,7 +255,7 @@ fun DashboardBottomNavigationBar() {
             icon = { Icon(Icons.Default.Face, contentDescription = "Looks") },
             label = { Text("Looks") },
             selected = false,
-            onClick = {},
+            onClick = {navController.navigate("exploreNewLooks") },
             colors = navItemColors
         )
         NavigationBarItem(
@@ -262,6 +267,7 @@ fun DashboardBottomNavigationBar() {
         )
     }
 }
+
 //@Preview(showBackground = true, showSystemUi = true)
 //@Composable
 //fun DashboardScreenPreview() {
