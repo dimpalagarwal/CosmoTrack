@@ -4,6 +4,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,6 +19,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import com.example.myapplication.R
 
@@ -33,19 +37,33 @@ data class ProductDetails(
 )
 
 @Composable
-fun ProductDetailsScreen(product: ProductDetails, modifier: Modifier = Modifier) {
+fun ProductDetailsScreen(product: ProductDetails, modifier: Modifier = Modifier, navController: NavController = rememberNavController()) {
+
     Box(
         modifier = modifier
             .fillMaxSize()
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.background_image),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
+//        Image(
+//            painter = painterResource(id = R.drawable.background_image),
+//            contentDescription = null,
+//            contentScale = ContentScale.Crop,
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .alpha(0.4f)
+//        )
+
+        IconButton(
+            onClick = { navController.popBackStack() },
             modifier = Modifier
-                .fillMaxSize()
-                .alpha(0.4f)
-        )
+                .align(Alignment.TopStart)
+                .padding(10.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = "Back",
+                tint = Color.Black
+            )
+        }
 
         Column(
             modifier = modifier
@@ -89,6 +107,18 @@ fun ProductDetailsScreen(product: ProductDetails, modifier: Modifier = Modifier)
             ) {
                 Text("Notify before expiry", color = Color.White)
             }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Button(
+                onClick = { /* Handle alternate use */ },
+                shape = RoundedCornerShape(20.dp),
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = Maroon) // A brownish shade, or choose any
+            ) {
+                Text("Alternate Use", color = Color.White)
+            }
+
         }
     }
 }

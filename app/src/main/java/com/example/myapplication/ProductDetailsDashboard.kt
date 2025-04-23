@@ -10,6 +10,11 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -45,61 +50,127 @@ fun ProductDetailsScreen() {
         it.name.contains(searchQuery, ignoreCase = true)
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFFFF8F7))
-            .padding(16.dp)
-    ) {
-        // Header
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFF800020), shape = RoundedCornerShape(16.dp))
-                .padding(vertical = 14.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "My Makeup Shelf",
-                color = Color.White,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
+    Scaffold(
+        bottomBar = {
+            DetailsBottomNavigationBar()
         }
+    ) { innerPadding ->
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Search Bar
-        OutlinedTextField(
-            value = searchQuery,
-            onValueChange = { searchQuery = it },
-            placeholder = { Text("Search products") },
-            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(25.dp))
-                .background(Color.White),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = Color.White,
-                unfocusedContainerColor = Color.White
-            )
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Product Grid
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(bottom = 80.dp)
+                .fillMaxSize()
+                .background(Color(0xFFFFF8F7))
+                .padding(16.dp)
+                .padding(innerPadding)
         ) {
-            items(filteredProducts) { product ->
-                ProductCard(product)
+            // Header
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color(0xFF800020), shape = RoundedCornerShape(16.dp))
+                    .padding(vertical = 14.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "My Makeup Shelf",
+                    color = Color.White,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Search Bar
+            OutlinedTextField(
+                value = searchQuery,
+                onValueChange = { searchQuery = it },
+                placeholder = { Text("Search products") },
+                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(25.dp))
+                    .background(Color.White),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedContainerColor = Color.White,
+                    unfocusedContainerColor = Color.White
+                )
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Product Grid
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(bottom = 80.dp)
+            ) {
+                items(filteredProducts) { product ->
+                    ProductCard(product)
+                }
             }
         }
     }
 }
+
+@Composable
+fun DetailsBottomNavigationBar(
+//    onHomeClick: () -> Unit,
+//    onProductsClick: () -> Unit,
+//    onRemindersClick: () -> Unit,
+//    onLooksClick: () -> Unit,
+//    onProfileClick: () -> Unit
+) {
+    NavigationBar(
+        containerColor = Color(0xFF800020)
+    ) {
+        val navItemColors = NavigationBarItemDefaults.colors(
+            selectedIconColor = Color.White,
+            unselectedIconColor = Color.White,
+            selectedTextColor = Color.White,
+            unselectedTextColor = Color.White,
+            indicatorColor = Color(0xFF888888)
+        )
+
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
+            label = { Text("Home") },
+            selected = false,
+            onClick = {},
+            colors = navItemColors
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.List, contentDescription = "Products") },
+            label = { Text("Products") },
+            selected = true,
+            onClick = {},
+            colors = navItemColors
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Notifications, contentDescription = "Reminders") },
+            label = { Text("Reminders") },
+            selected = false,
+            onClick = {},
+            colors = navItemColors
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Face, contentDescription = "Looks") },
+            label = { Text("Looks") },
+            selected = false,
+            onClick = {},
+            colors = navItemColors
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
+            label = { Text("Profile") },
+            selected = false,
+            onClick = {},
+            colors = navItemColors
+        )
+    }
+}
+
 
 @Composable
 fun ProductCard(product: Product) {

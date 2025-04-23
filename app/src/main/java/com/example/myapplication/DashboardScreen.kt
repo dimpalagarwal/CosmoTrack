@@ -36,8 +36,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.viewmodel.UserProfileViewModel
 import com.google.android.gms.analytics.ecommerce.Product
 
@@ -69,13 +71,17 @@ fun DashboardScreen(
                         .align(Alignment.BottomEnd)
                         .padding(end = 16.dp, bottom = 96.dp) // Positioned above the + FAB
                 ) {
-                    Icon(painter = painterResource(id = R.drawable.baseline_smart_toy_24), contentDescription = "Chat Bot")
+                    Icon(
+                        painter = painterResource(id = R.drawable.baseline_smart_toy_24),
+                        contentDescription = "Chat Bot",
+                        tint = Color.Black // or a darker custom color like Color(0xFF333333)
+                    )
                 }
 
                 // Add FAB
                 FloatingActionButton(
                     onClick = { showOptions = !showOptions },
-                    containerColor = Color(0xFFF7EBED),
+                    containerColor = Color(0xFFF87B90),
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
                         .padding(end = 16.dp, bottom = 16.dp)
@@ -84,7 +90,7 @@ fun DashboardScreen(
                             fabMenuAnchor.value = localOffset
                         }
                 ) {
-                    Icon(Icons.Default.Add, contentDescription = "Add")
+                    Icon(Icons.Default.Add, contentDescription = "Add",tint = Color.Black)
                 }
 
                 DropdownMenu(
@@ -151,7 +157,7 @@ fun DashboardScreen(
                     Text(
                         "📅 Add your Google Calendar",
                         fontWeight = FontWeight.Medium,
-                        color = Color(0xFF6B4F32) // Dark brown text
+                        color = Color(0xFF444444) // Dark brown text
                     )
                     Text(
                         "Sync your schedule for better planning.",
@@ -187,7 +193,7 @@ fun TopGreetingSection(name: String) {
             )
             Spacer(modifier = Modifier.width(8.dp))
             Column {
-                Text("Hello $name", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Text("Hello $name", fontSize = 20.sp, fontWeight = FontWeight.Bold,color = Color.Black)
                 Text("You're glowing today!", color = Color.DarkGray)
             }
         }
@@ -207,7 +213,7 @@ fun CardInfo(title: String, content: String) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(title, fontWeight = FontWeight.SemiBold)
             Spacer(modifier = Modifier.height(4.dp))
-            Text(content, color = Color.DarkGray)
+            Text(content, color = Color(0xFF444444))
         }
     }
 }
