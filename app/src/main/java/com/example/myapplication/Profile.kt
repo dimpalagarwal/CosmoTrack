@@ -17,18 +17,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
-@Preview(showBackground = true)
-@Composable
-fun UserProfilePreview() {
-    UserProfileScreen()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun UserProfilePreview() {
+//    UserProfileScreen()
+//}
 
 @Composable
-fun UserProfileScreen() {
+fun UserProfileScreen(navController: NavHostController) {
     val maroon = Color(0xFF800020)
     val softWhite = Color(0xFFF7EBED)
 

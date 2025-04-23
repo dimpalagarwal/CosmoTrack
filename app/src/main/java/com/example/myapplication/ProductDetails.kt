@@ -23,6 +23,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import com.example.myapplication.R
+import com.example.myapplication.viewmodel.ProductViewModel
 
 val Maroon = Color(0xFF800020)
 val LightMaroon = Color(0xFFD8B4B4)
@@ -37,20 +38,12 @@ data class ProductDetails(
 )
 
 @Composable
-fun ProductDetailsScreen(product: ProductDetails, modifier: Modifier = Modifier, navController: NavController = rememberNavController()) {
-
+fun ProductDetailsScreen(productViewModel: ProductViewModel,  navController: NavController = rememberNavController()) {
+    val product = productViewModel.selectedProduct
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
     ) {
-//        Image(
-//            painter = painterResource(id = R.drawable.background_image),
-//            contentDescription = null,
-//            contentScale = ContentScale.Crop,
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .alpha(0.4f)
-//        )
 
         IconButton(
             onClick = { navController.popBackStack() },
@@ -66,7 +59,7 @@ fun ProductDetailsScreen(product: ProductDetails, modifier: Modifier = Modifier,
         }
 
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -83,17 +76,17 @@ fun ProductDetailsScreen(product: ProductDetails, modifier: Modifier = Modifier,
             )
 
             Spacer(modifier = Modifier.height(12.dp))
-            Text(product.name, fontSize = 22.sp, fontWeight = FontWeight.Bold, color = Maroon)
-            Text("Expires in ${product.expiryDays} days", color = Color(0xFFB65D00))
+            Text(product?.name ?:"NOT FOUND!!", fontSize = 22.sp, fontWeight = FontWeight.Bold, color = Maroon)
+            Text("Expires in ${product?.expiryDays} days", color = Color(0xFFB65D00))
 
             Spacer(modifier = Modifier.height(16.dp))
             ExpiryStatusRow()
 
             Spacer(modifier = Modifier.height(16.dp))
-            IngredientsCard(product.ingredients)
+            IngredientsCard(product?.ingredients ?:"NOT FOUND!!" )
 
             Spacer(modifier = Modifier.height(16.dp))
-            BarcodeCard(product.barcode)
+            BarcodeCard(product?.barcode ?: "NOT FOUND!!")
 
             Spacer(modifier = Modifier.height(16.dp))
             ActionButtons()
@@ -111,7 +104,7 @@ fun ProductDetailsScreen(product: ProductDetails, modifier: Modifier = Modifier,
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(
-                onClick = { /* Handle alternate use */ },
+                onClick = { navController.navigate("alternateUse")},
                 shape = RoundedCornerShape(20.dp),
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = Maroon) // A brownish shade, or choose any
@@ -208,14 +201,17 @@ fun ActionButtons() {
 @Preview(showBackground = true)
 @Composable
 fun ProductDetailsPreview() {
-    val previewProduct = ProductDetails(
-        name = "Coronation",
-        expiryDays = 64,
-        ingredients = "Aqua, Sodium Laureth Sulfate, Cocamidopropyl Betaine, Glycerin, etc.",
-        barcode = "123456789012"
-    )
+    val mockViewModel = ProductViewModel().apply {
+        selectedProduct = ProductDetails(
+            name = "Coronation",
+            expiryDays = 64,
+            ingredients = "Aqua, Sodium Laureth Sulfate, Cocamidopropyl Betaine, Glycerin, etc.",
+            barcode = "123456789012"
+        )
+    }
 
     MyApplicationTheme {
-        ProductDetailsScreen(product = previewProduct)
+        val navController = rememberNavController()
+        ProductDetailsScreen(productViewModel = mockViewModel, navController =navController)
     }
 }

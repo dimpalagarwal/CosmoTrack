@@ -15,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -49,6 +48,8 @@ fun AppNavigation() {
     val userProfileViewModel: UserProfileViewModel = viewModel()
     val productViewModel: ProductViewModel = viewModel()
 
+
+
     NavHost(navController, startDestination = "welcome") {
         composable("welcome") { WelcomeScreen(navController) }
         composable("signin") { SignInScreen(navController) }
@@ -72,13 +73,11 @@ fun AppNavigation() {
                 userProfileViewModel = userProfileViewModel
             )
         }
+//        composable("NavigationBar"){
+//            DashboardBottomNavigationBar(navController)
+//        }
         composable("scannerScreen") {
             ScannerScreen(navController = navController, productViewModel = productViewModel)
-        }
-        composable("productDetails") {
-            productViewModel.selectedProduct?.let {
-                ProductDetailsScreen(product = it)
-            }
         }
         composable("exploreNewLooks") {
             ExploreNewLooksScreen(navController)
@@ -86,15 +85,23 @@ fun AppNavigation() {
         composable("expiringSoon") {
             ExpiringSoonScreen(navController)
         }
-        composable("alternateList") {
-            AlternateList(navController)
-        }
+
         composable("alternateUse") {
             ExpirationDetailsScreen(navController = navController)
+        }
+        composable("ProductDashboard") {
+            ProductDashboardScreen(navController)
+        }
+        composable("ProductDetails") {
+            ProductDetailsScreen(productViewModel , navController)
+        }
+        composable("UserProfile") {
+            UserProfileScreen(navController)
         }
 
     }
 }
+
 
 @Composable
 fun WelcomeScreen(navController: NavController) {

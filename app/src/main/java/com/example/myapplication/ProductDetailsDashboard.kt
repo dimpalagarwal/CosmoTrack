@@ -28,11 +28,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 data class Product(val name: String, val imageRes: Int, var quantity: Int = 1)
 
 @Composable
-fun ProductDetailsScreen() {
+fun ProductDashboardScreen(navController: NavController) {
     var searchQuery by remember { mutableStateOf("") }
 
     val allProducts = remember {
@@ -260,6 +262,7 @@ fun CircleIcon(symbol: String, onClick: () -> Unit) {
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewProductDetailsScreen() {
-    ProductDetailsScreen()
+fun ProductDashboardScreen() {
+    val navController = rememberNavController()
+    ProductDashboardScreen(navController = navController)
 }

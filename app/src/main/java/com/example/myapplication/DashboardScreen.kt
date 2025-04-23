@@ -1,4 +1,3 @@
-
 package com.example.myapplication
 
 // Required Imports
@@ -220,6 +219,7 @@ fun CardInfo(title: String, content: String) {
 
 @Composable
 fun DashboardBottomNavigationBar() {
+    val navController = rememberNavController()
     NavigationBar(
         containerColor = Color(0xFF800020)
     ) {
@@ -242,7 +242,9 @@ fun DashboardBottomNavigationBar() {
             icon = { Icon(Icons.Default.List, contentDescription = "Products") },
             label = { Text("Products") },
             selected = false,
-            onClick = {},
+            onClick = {
+                navController.navigate("ProductDashboard")
+            },
             colors = navItemColors
         )
         NavigationBarItem(
@@ -256,7 +258,7 @@ fun DashboardBottomNavigationBar() {
             icon = { Icon(Icons.Default.Face, contentDescription = "Looks") },
             label = { Text("Looks") },
             selected = false,
-            onClick = {},
+            onClick = {navController.navigate("exploreNewLooks") },
             colors = navItemColors
         )
         NavigationBarItem(
@@ -268,6 +270,7 @@ fun DashboardBottomNavigationBar() {
         )
     }
 }
+
 //@Preview(showBackground = true, showSystemUi = true)
 //@Composable
 //fun DashboardScreenPreview() {
