@@ -36,29 +36,6 @@ import com.example.myapplication.R
 import androidx.compose.ui.tooling.preview.Preview
 
 
-
-//class ExploreLooksActivity : ComponentActivity() {
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContent {
-//            MyApplicationTheme {
-//                val navController = rememberNavController()
-//                NavHost(navController = navController, startDestination = "explore_looks") {
-//                    composable("explore_looks") {
-//                        ExploreNewLooksScreen(navController)
-//                    }
-//                    composable(
-//                        "look_detail/{lookName}",
-//                        arguments = listOf(navArgument("lookName") { type = NavType.StringType })
-//                    ) { backStackEntry ->
-//                        val lookName = backStackEntry.arguments?.getString("lookName") ?: ""
-//                        LookDetailScreen(lookName)
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
 @Preview(showBackground = true)
 @Composable
 fun ExploreNewLooksScreenPreview() {

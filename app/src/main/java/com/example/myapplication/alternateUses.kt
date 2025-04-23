@@ -79,7 +79,7 @@ fun ExpirationDetailsScreen(navController: NavController) {
             }
         },
         bottomBar = {
-            DashboardBottomNavigationBar()
+            DashboardBottomNavigationBar(navController)
         },
     ) { innerPadding ->
         Column(

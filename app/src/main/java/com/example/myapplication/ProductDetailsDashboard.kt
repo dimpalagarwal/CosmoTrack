@@ -25,11 +25,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 
 data class Product(val name: String, val imageRes: Int, var quantity: Int = 1)
 
@@ -54,7 +52,7 @@ fun ProductDashboardScreen(navController: NavController) {
 
     Scaffold(
         bottomBar = {
-            DetailsBottomNavigationBar()
+            DetailsBottomNavigationBar(navController)
         }
     ) { innerPadding ->
 
@@ -117,13 +115,7 @@ fun ProductDashboardScreen(navController: NavController) {
 }
 
 @Composable
-fun DetailsBottomNavigationBar(
-//    onHomeClick: () -> Unit,
-//    onProductsClick: () -> Unit,
-//    onRemindersClick: () -> Unit,
-//    onLooksClick: () -> Unit,
-//    onProfileClick: () -> Unit
-) {
+fun DetailsBottomNavigationBar(navController: NavController) {
     NavigationBar(
         containerColor = Color(0xFF800020)
     ) {
@@ -260,9 +252,9 @@ fun CircleIcon(symbol: String, onClick: () -> Unit) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ProductDashboardScreen() {
-    val navController = rememberNavController()
-    ProductDashboardScreen(navController = navController)
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun ProductDashboardScreen() {
+//    val navController = rememberNavController()
+//    ProductDashboardScreen(navController = navController)
+//}

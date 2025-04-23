@@ -36,7 +36,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -76,7 +83,7 @@ fun AlternateList(navController: NavController) {
 
     Scaffold(
         bottomBar = {
-            DashboardBottomNavigationBar()
+            AlternateBottomNavigationBar(navController)
         },
         containerColor = Color.White
     ) { innerPadding ->
@@ -156,6 +163,56 @@ fun AlternateList(navController: NavController) {
     }
 }
 
+@Composable
+fun AlternateBottomNavigationBar(navController: NavController) {
+    NavigationBar(
+        containerColor = Color(0xFF800020)
+    ) {
+        val navItemColors = NavigationBarItemDefaults.colors(
+            selectedIconColor = Color.White,
+            unselectedIconColor = Color.White,
+            selectedTextColor = Color.White,
+            unselectedTextColor = Color.White,
+            indicatorColor = Color(0xFF888888)
+        )
+
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
+            label = { Text("Home") },
+            selected = false,
+            onClick = { navController.navigate("dashboardScreen") },  // Keep the current screen
+            colors = navItemColors
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.List, contentDescription = "Products") },
+            label = { Text("Products") },
+            selected = true,
+            onClick = { navController.navigate("ProductDetailsDashboard") },  // Navigate to ProductDetailsDashboard
+            colors = navItemColors
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Notifications, contentDescription = "Reminders") },
+            label = { Text("Reminders") },
+            selected = false,
+            onClick = { navController.navigate("expiringSoon") },  // Example for Reminders screen
+            colors = navItemColors
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Face, contentDescription = "Looks") },
+            label = { Text("Looks") },
+            selected = false,
+            onClick = { navController.navigate("exploreNewLooks") },  // Navigate to ExploreNewLooksScreen
+            colors = navItemColors
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
+            label = { Text("Profile") },
+            selected = false,
+            onClick = { navController.navigate("UserProfile") },  // Navigate to UserProfileScreen
+            colors = navItemColors
+        )
+    }
+}
 
 @Composable
 fun ItemBar(

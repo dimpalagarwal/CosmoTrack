@@ -57,7 +57,7 @@ fun DashboardScreen(
 
     Scaffold(
         bottomBar = {
-            DashboardBottomNavigationBar()
+            DashboardBottomNavigationBar(navController)
         },
         floatingActionButton = {
             Box(modifier = Modifier.fillMaxSize()) {
@@ -218,8 +218,7 @@ fun CardInfo(title: String, content: String) {
 }
 
 @Composable
-fun DashboardBottomNavigationBar() {
-    val navController = rememberNavController()
+fun DashboardBottomNavigationBar(navController: NavController) {
     NavigationBar(
         containerColor = Color(0xFF800020)
     ) {
@@ -228,44 +227,42 @@ fun DashboardBottomNavigationBar() {
             unselectedIconColor = Color.White,
             selectedTextColor = Color.White,
             unselectedTextColor = Color.White,
-            indicatorColor = Color(0xFF888888) // <-- light gray background for selected item
+            indicatorColor = Color(0xFF888888)
         )
 
         NavigationBarItem(
             icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
             label = { Text("Home") },
             selected = true,
-            onClick = {},
+            onClick = { navController.navigate("dashboardScreen") },  // Keep the current screen
             colors = navItemColors
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.List, contentDescription = "Products") },
             label = { Text("Products") },
             selected = false,
-            onClick = {
-                navController.navigate("ProductDashboard")
-            },
+            onClick = { navController.navigate("ProductDetailsDashboard") },  // Navigate to ProductDetailsDashboard
             colors = navItemColors
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Notifications, contentDescription = "Reminders") },
             label = { Text("Reminders") },
             selected = false,
-            onClick = {},
+            onClick = { navController.navigate("expiringSoon") },  // Example for Reminders screen
             colors = navItemColors
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Face, contentDescription = "Looks") },
             label = { Text("Looks") },
             selected = false,
-            onClick = {navController.navigate("exploreNewLooks") },
+            onClick = { navController.navigate("exploreNewLooks") },  // ✅ Correct
             colors = navItemColors
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
             label = { Text("Profile") },
             selected = false,
-            onClick = {},
+            onClick = { navController.navigate("Profile") },  // Navigate to UserProfileScreen
             colors = navItemColors
         )
     }

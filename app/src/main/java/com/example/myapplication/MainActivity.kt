@@ -48,8 +48,6 @@ fun AppNavigation() {
     val userProfileViewModel: UserProfileViewModel = viewModel()
     val productViewModel: ProductViewModel = viewModel()
 
-
-
     NavHost(navController, startDestination = "welcome") {
         composable("welcome") { WelcomeScreen(navController) }
         composable("signin") { SignInScreen(navController) }
@@ -57,31 +55,28 @@ fun AppNavigation() {
         composable("basicDetailsScreen") {
             BasicDetailsScreen(navController, userProfileViewModel)
         }
-        composable("dashboardScreen") { backStackEntry ->
 
-            // 👇 This grabs the name you saved from BasicDetailsScreen
+        composable("dashboardScreen") { backStackEntry ->
             val name = navController.previousBackStackEntry
                 ?.savedStateHandle
                 ?.get<String>("name") ?: "User"
 
-            val userProfileViewModel: UserProfileViewModel = viewModel()
-
             DashboardScreen(
                 name = name,
                 navController = navController,
-                scannedProducts = scannedProducts, // or an empty SnapshotStateList
+                scannedProducts = scannedProducts,
                 userProfileViewModel = userProfileViewModel
             )
         }
-//        composable("NavigationBar"){
-//            DashboardBottomNavigationBar(navController)
-//        }
+
         composable("scannerScreen") {
             ScannerScreen(navController = navController, productViewModel = productViewModel)
         }
+
         composable("exploreNewLooks") {
             ExploreNewLooksScreen(navController)
         }
+
         composable("expiringSoon") {
             ExpiringSoonScreen(navController)
         }
@@ -89,18 +84,22 @@ fun AppNavigation() {
         composable("alternateUse") {
             ExpirationDetailsScreen(navController = navController)
         }
-        composable("ProductDashboard") {
+
+        // ✅ Newly added screens for navigation from dashboard icons
+        composable("ProductDetailsDashboard") {
             ProductDashboardScreen(navController)
         }
+
         composable("ProductDetails") {
-            ProductDetailsScreen(productViewModel , navController)
-        }
-        composable("UserProfile") {
-            UserProfileScreen(navController)
+            ProductDetailsScreen(productViewModel, navController)
         }
 
+        composable("Profile") {
+            UserProfileScreen(navController)
+        }
     }
 }
+
 
 
 @Composable

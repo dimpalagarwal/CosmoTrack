@@ -127,7 +127,7 @@ fun ExpiringSoonScreen(navController: NavController) {
     var searchText by remember { mutableStateOf("") }
     Scaffold(
         bottomBar = {
-            DashboardBottomNavigationBar()
+            DashboardBottomNavigationBar(navController)
         },
         containerColor = Color(0xFFF7EBED)
     ) { innerPadding ->
