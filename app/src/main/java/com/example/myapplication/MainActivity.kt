@@ -72,13 +72,11 @@ fun AppNavigation() {
                 userProfileViewModel = userProfileViewModel
             )
         }
+//        composable("NavigationBar"){
+//            DashboardBottomNavigationBar(navController)
+//        }
         composable("scannerScreen") {
             ScannerScreen(navController = navController, productViewModel = productViewModel)
-        }
-        composable("productDetails") {
-            productViewModel.selectedProduct?.let {
-                ProductDetailsScreen(product = it)
-            }
         }
         composable("exploreNewLooks") {
             ExploreNewLooksScreen(navController)
@@ -86,15 +84,20 @@ fun AppNavigation() {
         composable("expiringSoon") {
             ExpiringSoonScreen(navController)
         }
-        composable("alternateList") {
-            AlternateList(navController)
-        }
+
         composable("alternateUse") {
             ExpirationDetailsScreen(navController = navController)
+        }
+        composable("ProductDashboard") {
+            ProductDashboard(navController)
+        }
+        composable("ProductDetails") {
+            ProductDetailsScreen(navController)
         }
 
     }
 }
+
 
 @Composable
 fun WelcomeScreen(navController: NavController) {
