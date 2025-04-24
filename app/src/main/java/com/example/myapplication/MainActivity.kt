@@ -97,6 +97,13 @@ fun AppNavigation() {
         composable("Profile") {
             UserProfileScreen(navController)
         }
+
+        composable("manualEntryScreen") {
+            SimpleManualEntryScreen(
+                onSave = { navController.popBackStack() },
+                onCancel = { navController.popBackStack() }
+            )
+        }
     }
 }
 
