@@ -7,8 +7,12 @@ import androidx.lifecycle.ViewModel
 
 class UserProfileViewModel : ViewModel() {
     var profileImageUri = mutableStateOf<Uri?>(null)
+    var name = mutableStateOf<String?>(null)
 
     fun setProfileImage(uri: Uri) {
         profileImageUri.value = uri
     }
 }
+
+
+

@@ -15,23 +15,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.myapplication.viewmodel.UserProfileViewModel
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-
-//@Preview(showBackground = true)
-//@Composable
-//fun UserProfilePreview() {
-//    UserProfileScreen()
-//}
+import coil.compose.rememberAsyncImagePainter
 
 @Composable
-fun UserProfileScreen(navController: NavHostController) {
+fun UserProfileScreen(navController: NavHostController,
+                      userProfileViewModel: UserProfileViewModel) {
     val maroon = Color(0xFF800020)
     val softWhite = Color(0xFFF7EBED)
+    val imageUri = userProfileViewModel.profileImageUri.value
+//    val name = userProfileViewModel.name.value ?: "User"
+
 
     Scaffold(
         bottomBar = { BottomNavigationBar(navController) },
@@ -52,15 +53,35 @@ fun UserProfileScreen(navController: NavHostController) {
                 contentAlignment = Alignment.Center
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Image(
-                        painter = painterResource(id = R.drawable.user),
-                        contentDescription = "User Image",
+                    Box(
                         modifier = Modifier
                             .size(90.dp)
                             .clip(CircleShape)
                             .background(softWhite)
-                            .padding(4.dp)
-                    )
+                            .padding(4.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        if (imageUri != null) {
+                            Image(
+                                painter = rememberAsyncImagePainter(imageUri),
+                                contentDescription = "User Image",
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .clip(CircleShape),
+                                contentScale = ContentScale.Crop
+                            )
+                        } else {
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_user), // fallback image
+                                contentDescription = "User Image",
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .clip(CircleShape),
+                                contentScale = ContentScale.Crop
+                            )
+                        }
+                    }
+
 
                     Spacer(modifier = Modifier.height(12.dp))
                     Text("Alex Morgan", color = softWhite, fontSize = 20.sp, fontWeight = FontWeight.Bold)

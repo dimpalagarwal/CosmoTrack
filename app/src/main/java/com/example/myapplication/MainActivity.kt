@@ -95,7 +95,7 @@ fun AppNavigation() {
         }
 
         composable("Profile") {
-            UserProfileScreen(navController)
+            UserProfileScreen(navController, userProfileViewModel)
         }
 
         composable("manualEntryScreen") {
