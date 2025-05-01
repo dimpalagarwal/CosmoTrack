@@ -23,10 +23,10 @@ fun ScannerScreen(
     ) { uri: Uri? ->
         uri?.let {
             productViewModel.selectedProduct = ProductDetails(
-                name = "Test Product",
+                name = "Coronation",
                 expiryDays = 30,
                 ingredients = "Water, Alcohol, Aloe Vera",
-                barcode = "000000000"
+                barcode = "007325465"
             )
             navController.navigate("productDetails")
         }

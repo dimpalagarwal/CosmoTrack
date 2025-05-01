@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 
 //@Preview(showBackground = true)
@@ -33,7 +34,7 @@ fun UserProfileScreen(navController: NavHostController) {
     val softWhite = Color(0xFFF7EBED)
 
     Scaffold(
-        bottomBar = { BottomNavigationBar() },
+        bottomBar = { BottomNavigationBar(navController) },
         containerColor = softWhite
     ) { innerPadding ->
         Column(
@@ -172,7 +173,7 @@ fun ProfileInfoItem(title: String, value: String) {
 }
 
 @Composable
-fun BottomNavigationBar() {
+fun BottomNavigationBar(navController: NavController) {
     NavigationBar(
         containerColor = Color(0xFF800020)
     ) {
@@ -188,35 +189,35 @@ fun BottomNavigationBar() {
             icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
             label = { Text("Home") },
             selected = false,
-            onClick = {},
+            onClick = { navController.navigate("dashboardScreen") },  // Keep the current screen
             colors = navItemColors
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.List, contentDescription = "Products") },
             label = { Text("Products") },
             selected = false,
-            onClick = {},
+            onClick = { navController.navigate("ProductDetailsDashboard") },  // Navigate to ProductDetailsDashboard
             colors = navItemColors
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Notifications, contentDescription = "Reminders") },
             label = { Text("Reminders") },
             selected = false,
-            onClick = {},
+            onClick = { navController.navigate("expiringSoon") },  // Example for Reminders screen
             colors = navItemColors
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Face, contentDescription = "Looks") },
             label = { Text("Looks") },
             selected = false,
-            onClick = {},
+            onClick = { navController.navigate("exploreNewLooks") },  // ✅ Correct
             colors = navItemColors
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
             label = { Text("Profile") },
-            selected = true, // You can update this dynamically
-            onClick = {},
+            selected = true,
+            onClick = { navController.navigate("Profile") },  // Navigate to UserProfileScreen
             colors = navItemColors
         )
     }

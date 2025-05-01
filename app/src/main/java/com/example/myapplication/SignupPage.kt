@@ -36,16 +36,6 @@ fun SignupScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
     ) {
-        // Background image
-//        Image(
-//            painter = painterResource(id = R.drawable.background_image),
-//            contentDescription = null,
-//            contentScale = ContentScale.Crop,
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .alpha(0.5f) // reduce opacity
-//        )
-
         Column(
             modifier = Modifier
                 .fillMaxSize()

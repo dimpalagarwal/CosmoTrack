@@ -131,35 +131,35 @@ fun DetailsBottomNavigationBar(navController: NavController) {
             icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
             label = { Text("Home") },
             selected = false,
-            onClick = {},
+            onClick = { navController.navigate("dashboardScreen") },  // Keep the current screen
             colors = navItemColors
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.List, contentDescription = "Products") },
             label = { Text("Products") },
             selected = true,
-            onClick = {},
+            onClick = { navController.navigate("ProductDetailsDashboard") },  // Navigate to ProductDetailsDashboard
             colors = navItemColors
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Notifications, contentDescription = "Reminders") },
             label = { Text("Reminders") },
             selected = false,
-            onClick = {},
+            onClick = { navController.navigate("expiringSoon") },  // Example for Reminders screen
             colors = navItemColors
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Face, contentDescription = "Looks") },
             label = { Text("Looks") },
             selected = false,
-            onClick = {},
+            onClick = { navController.navigate("exploreNewLooks") },  // ✅ Correct
             colors = navItemColors
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
             label = { Text("Profile") },
             selected = false,
-            onClick = {},
+            onClick = { navController.navigate("Profile") },  // Navigate to UserProfileScreen
             colors = navItemColors
         )
     }
@@ -173,23 +173,23 @@ fun ProductCard(product: Product) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(0.85f),
+            .aspectRatio(0.9f),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xFFF7EBED)),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(
             modifier = Modifier
-                .padding(12.dp),
-            verticalArrangement = Arrangement.SpaceBetween,
+                .padding(horizontal = 8.dp, vertical = 10.dp),
+            verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
                 painter = painterResource(id = product.imageRes),
                 contentDescription = product.name,
                 modifier = Modifier
-                    .size(80.dp)
-                    .padding(8.dp),
+                    .size(64.dp)
+                    .padding(4.dp),
                 contentScale = ContentScale.Fit
             )
 
@@ -197,9 +197,10 @@ fun ProductCard(product: Product) {
 
             Text(
                 text = product.name,
-                fontSize = 18.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = Color(0xFF800020)
+                color = Color(0xFF800020),
+//                modifier = Modifier.padding(top = 4.dp)
             )
 
             Spacer(modifier = Modifier.height(8.dp))
