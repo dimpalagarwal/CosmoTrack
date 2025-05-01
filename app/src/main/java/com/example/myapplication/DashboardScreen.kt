@@ -39,6 +39,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import com.example.myapplication.viewmodel.UserProfileViewModel
 import com.google.android.gms.analytics.ecommerce.Product
 
@@ -51,7 +53,7 @@ fun DashboardScreen(
     userProfileViewModel: UserProfileViewModel) {
     var showOptions by remember { mutableStateOf(false) }
     val context = LocalContext.current
-    val imageUri: Uri? = userProfileViewModel.profileImageUri.value
+    userProfileViewModel.profileImageUri.value
     val fabMenuAnchor = remember { mutableStateOf<Offset?>(null) }
 
 
@@ -125,7 +127,7 @@ fun DashboardScreen(
                 .background(Color(0xFFFFFFFF))
                 .padding(16.dp)
         ) {
-            TopGreetingSection(name = name)
+            TopGreetingSection(name = name, imageUri = userProfileViewModel.profileImageUri.value)
             Spacer(modifier = Modifier.height(30.dp))
 // Google Calendar Section with updated light brown and dark brown colors
             Card(
@@ -175,14 +177,23 @@ fun DashboardScreen(
 }
 
 @Composable
-fun TopGreetingSection(name: String) {
+fun TopGreetingSection(name: String, imageUri: Uri?) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Image(
+            imageUri?.let {
+                Image(
+                    painter = rememberAsyncImagePainter(it),
+                    contentDescription = "User Photo",
+                    modifier = Modifier
+                        .size(50.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop
+                )
+            } ?: Image(
                 painter = painterResource(id = R.drawable.ic_user),
                 contentDescription = "User Photo",
                 modifier = Modifier
@@ -192,12 +203,13 @@ fun TopGreetingSection(name: String) {
             )
             Spacer(modifier = Modifier.width(8.dp))
             Column {
-                Text("Hello $name", fontSize = 20.sp, fontWeight = FontWeight.Bold,color = Color.Black)
+                Text("Hello $name", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.Black)
                 Text("You're glowing today!", color = Color.DarkGray)
             }
         }
     }
 }
+
 
 
 @Composable
