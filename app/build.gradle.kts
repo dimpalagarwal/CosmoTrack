@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.androidx.benchmark.macro)
     implementation(libs.play.services.analytics.impl)
     implementation(libs.protolite.well.known.types)
+    implementation(libs.androidx.appcompat)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -222,7 +222,7 @@ fun CardInfo(title: String, content: String) {
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(title, fontWeight = FontWeight.SemiBold)
+            Text(title, fontWeight = FontWeight.SemiBold,color = Color(0xFF444444))
             Spacer(modifier = Modifier.height(4.dp))
             Text(content, color = Color(0xFF444444))
         }
